@@ -1,0 +1,6 @@
+package-lock.json
+
+src_node/data/*
+node_modules/*
+client_admin/*
+client_react/*

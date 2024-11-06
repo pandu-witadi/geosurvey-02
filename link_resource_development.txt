@@ -1,0 +1,10 @@
+# email
+https://medium.com/@berkekurnaz/develop-a-scheduled-email-system-with-node-schedule-and-nodemailer-9e2ccf647ab6
+
+https://github.com/RitikMody/Email-Reminder.git
+
+
+# multer
+https://medium.com/@tericcabrel/upload-files-to-the-node-js-server-with-express-and-multer-3c41f41a6e
+
+https://github.com/roy-sukrit/MERN-Image_Uploading-using-multer.git
