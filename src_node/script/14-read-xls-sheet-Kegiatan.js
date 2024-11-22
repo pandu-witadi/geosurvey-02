@@ -8,7 +8,9 @@ const CF = require('../conf/conf_app')
 
 console.log('...execution directory : ', __dirname )
 
-// print process.argv
+console.log('-----------------------------------------')
+console.log('... argv names')
+console.log('-----------------------------------------')
 process.argv.forEach(function (val, index, array) {
     console.log('arg_index : ' + index + '  =>   arg_value : ' + val);
 })
@@ -70,43 +72,114 @@ const create_project = (obj) => {
     let tmp = {
         name: obj['NAMA_KEGIATAN'] || "",
         info: {
-            TAHUN: 2024,
+            TAHUN: obj['TAHUN'] || 0,
             NAMA_KEGIATAN: obj['NAMA_KEGIATAN'] || "",
             WK: obj['WK'] || "",
             STATUS_WK: obj['STATUS_WK'] || "",
             KKKS: obj['KKKS'] || "",
             HOLDING: obj['HOLDING'] || "",
-
             LABEL: obj['LABEL'] || "",
-            JENIS_KEGIATAN: obj['JENIS_KEGIATAN'] || "",
-            PANJANG_LUAS: obj['RENCANA_TOTAL_KUANTITAS_PEKERJAAN'] || 0,
-            TOTAL_RESOURCE: obj['RR_TOTAL_P50_MMBOE'] || 0,
-            NILAI_INVESTASI: obj['NILAI_INVESTASI'] || 0,
-            TOTAL_ACTUAL_COST: obj['REALISASI_BIAYA_AFE'] || 0,
-            HOLDING : obj['HOLDING'] || "",
-            TIPE_KONTRAK: obj['TIPE_KONTRAK'] || "",
-            REALISASI_STATUS_PELAKSANAAN: obj['REALISASI_STATUS_PELAKSANAAN'] || "",
+
             STATUS_USULAN_PROGRAM: obj['STATUS_USULAN_PROGRAM'] || "",
+            JENIS_KEGIATAN: obj['JENIS_KEGIATAN'] || "",
             JENIS_KOMITMEN: obj['JENIS_KOMITMEN'] || "",
-            REALISASI_KUANTITAS_PEKERJAAN: obj['REALISASI_KUANTITAS_PEKERJAAN'] || 0,
+            JENIS_TAHAPAN_KEGIATAN: obj['JENIS_TAHAPAN_KEGIATAN'] || "",
+            AREA_KEGIATAN: obj['AREA_KEGIATAN'] || "",
+
+            STATUS_PERSETUJUAN_TEKNIS: obj['STATUS_PERSETUJUAN_TEKNIS'] || "",
+            TIPE_KONTRAK: obj['TIPE_KONTRAK'] || "",
+            STATUS_BUNDLING: obj['STATUS_BUNDLING'] || "",
+            NO_AFE: obj['NO_AFE'] || "",
+            NILAI_AFE: obj['NILAI_AFE'] || 0,
+            NILAI_INVESTASI: obj['NILAI_INVESTASI'] || 0,
+            STATUS_AFE_ONLINE: obj['STATUS_AFE_ONLINE'] || "",
+
             RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
             RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) || null,
             RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) || null,
+
+            REGION_SKK: obj['REGION_SKK'] || "",
+            PROVINSI: obj['PROVINSI'] || "",
+            KENDALA_OPERASIONAL_LAPANGAN: obj['KENDALA_OPERASIONAL_LAPANGAN'] || "",
+            REALISASI_STATUS_PELAKSANAAN: obj['REALISASI_STATUS_PELAKSANAAN'] || "",
+            OUTLOOK_KEGIATAN: obj['OUTLOOK_KEGIATAN'] || "",
+
             REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || null,
             REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) || null,
-            NO_AFE: obj['NO_AFE'] || "",
-            NILAI_AFE: obj['NILAI_AFE'] || 0,
-            REALISASI_BIAYA_AFE: obj['REALISASI_BIAYA_AFE'] || 0,
-            STATUS_AFE_ONLINE: obj['STATUS_AFE_ONLINE'] || "",
 
-            // X_LONGITUDE: obj['X_LONGITUDE'] || 0,
+            REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
+            P_REALISASI_KEGIATAN_TOTAL_WPNB: obj['P_REALISASI_KEGIATAN_TOTAL_WPNB'] || 0,
+            REALISASI_BIAYA_AFE: obj['REALISASI_BIAYA_AFE'] || 0,
+            P_REALISASI_BIAYA_AFE: obj['P_REALISASI_BIAYA_AFE'] || 0,
+
+            TOPOGRAFI: obj['TOPOGRAFI'] || "",
+            BRIDGING: obj['BRIDGING'] || "",
+            OBJEKTIF: obj['OBJEKTIF'] || "",
+            LINTASAN_MELALUI_SUMUR: obj['LINTASAN_MELALUI_SUMUR'] || "",
+            NAMA_STRUKTUR_PNL: obj['NAMA_STRUKTUR_PNL'] || "",
+
+            PROSPECT: obj['PROSPECT'] || 0,
+            LEAD: obj['LEAD'] || 0,
+            STATUS_RESOURCE_LAINNYA: obj['STATUS_RESOURCE_LAINNYA'] || 0,
+            PLAY: obj['PLAY'] || "",
+            RR_P50_OIL_MMBOE: obj['RR_P50_OIL_MMBOE'] || 0,
+            RR_P50_GAS_BSCF: obj['RR_P50_GAS_BSCF'] || 0,
+            RR_TOTAL_P50_MMBOE: obj['RR_TOTAL_P50_MMBOE'] || 0,
+
+            FULL_FOLD: obj['FULL_FOLD'] || 0,
+            NEAR_OFFSET_M: obj['NEAR_OFFSET_M'] || 0,
+            FAR_OFFSET_M: obj['FAR_OFFSET_M'] || 0,
+            SHOT_POINT_INTERVAL_M: obj['SHOT_POINT_INTERVAL_M'] || 0,
+            RECEIVER_LINE_INTERVAL_M: obj['RECEIVER_LINE_INTERVAL_M'] || 0,
+            JUMLAH_SHOT_POINT_ESTIMATED: obj['JUMLAH_SHOT_POINT_ESTIMATED'] || 0,
+            SAMPLING_RATE_MS: obj['SAMPLING_RATE_MS'] || 0,
+            RECORD_LENGTH_S: obj['RECORD_LENGTH_S'] || 0,
+            PANJANG_STREAMER: obj['PANJANG_STREAMER'] || 0,
+            JENIS_RECEIVER: obj['JENIS_RECEIVER'] || 0,
+
+            X_LONGITUDE: obj['X_LONGITUDE'] || 0,
+            Y_LATITUDE: obj['Y_LATITUDE'] || 0,
+
+            P_WPNB_WP_AFE_TEKNIS: obj['P_WPNB_WP_AFE_TEKNIS'] || 0,
+            P_VALIDASI_PARAMETER_DESAIN: obj['P_VALIDASI_PARAMETER_DESAIN'] || 0,
+            P_SURAT_PEMBERITAHUAN_PELAKSANAAN: obj['P_SURAT_PEMBERITAHUAN_PELAKSANAAN'] || 0,
+            P_LIASON_OFFICE: obj['P_LIASON_OFFICE'] || 0,
+            P_SERTIFIKAT_PERSONEL_SKNI: obj['P_SERTIFIKAT_PERSONEL_SKNI'] || 0,
+
+            P_PROJECT_SUMMARY_MOM_SOW: obj['P_PROJECT_SUMMARY_MOM_SOW'] || 0,
+            P_IZIN_HELIDECK: obj['P_IZIN_HELIDECK'] || 0,
+            P_PPKA: obj['P_PPKA'] || 0,
+            P_MAKLUMAT_PELAYARAN: obj['P_MAKLUMAT_PELAYARAN'] || 0,
+            P_BERITA_PELAUT_INDONESIA: obj['P_BERITA_PELAUT_INDONESIA'] || 0,
+
+            P_SCOUTING: obj['P_SCOUTING'] || 0,
+            P_SOSIALISASI: obj['P_SOSIALISASI'] || 0,
+            P_IZIN_PEMDA: obj['P_IZIN_PEMDA'] || 0,
+            P_IZIN_PPKH: obj['P_IZIN_PPKH'] || 0,
+            P_IZIN_UKL_UPL: obj['P_IZIN_UKL_UPL'] || 0,
+
+            P_IZIN_INSTANSI_LAIN: obj['P_IZIN_INSTANSI_LAIN'] || 0,
+            P_IZIN_K3S_LAIN: obj['P_IZIN_K3S_LAIN'] || 0,
+            P_IZIN_OPEN_AREA: obj['P_IZIN_OPEN_AREA'] || 0,
+            P_IZIN_PELEDAK: obj['P_IZIN_PELEDAK'] || 0,
+            P_SECURITY_CLEARANCE: obj['P_SECURITY_CLEARANCE'] || 0,
+
+            P_PENGADAAN_KONTRAKTOR_SURVEI: obj['P_PENGADAAN_KONTRAKTOR_SURVEI'] || 0,
+            P_PENGADAAN_BAHAN_PELEDAK: obj['P_PENGADAAN_BAHAN_PELEDAK'] || 0,
+            P_PENGADAAN_JASA_KENDALI_MUTU: obj['P_PENGADAAN_JASA_KENDALI_MUTU'] || 0,
+            P_MOBILISASI: obj['P_MOBILISASI'] || 0,
+            P_ADVANCE_PARTY: obj['P_ADVANCE_PARTY'] || 0,
+
+            P_BASIC_PARTY: obj['P_BASIC_PARTY'] || 0,
+            P_REKLAMASI: obj['P_REKLAMASI'] || 0,
+            P_KOMPENSASI_GANTI_RUGI: obj['P_KOMPENSASI_GANTI_RUGI'] || 0,
+            P_BASIC_PARTY: obj['P_DEMOBILISASI'] || 0,
+
         },
         calc: {
             TOTAL_INVESTASI: 0,
             TOTAL_RESOURCE: 0
-        },
-        raw: { ...obj },
-        // gantt: create_gantt(obj),
+        }
     }
 
 
@@ -148,74 +221,100 @@ async function insert_obj(client, dbase, collection, src, col_name) {
     }
 }
 
-insert_obj(client, 'MERN-geosurvey-01', 'Kegiatan', sheet_json, target_col).catch(console.dir)
+insert_obj(client,  CF.mongoose.database, 'Kegiatan', sheet_json, target_col).catch(console.dir)
 
 
 
 let column_names = [
+    'TAHUN',
     'LABEL',
+    'NAMA_KEGIATAN',
     'WK',
-    'KKKS',
     'STATUS_WK',
+    'KKKS',
     'HOLDING',
-    'TIPE_KONTRAK',
     'STATUS_USULAN_PROGRAM',
     'JENIS_KEGIATAN',
-    'NAMA_KEGIATAN',
+    'JENIS_KOMITMEN',
+    'JENIS_TAHAPAN_KEGIATAN',
+    'AREA_KEGIATAN',
+    'STATUS_PERSETUJUAN_TEKNIS',
+    'TIPE_KONTRAK',
     'STATUS_BUNDLING',
     'NO_AFE',
     'NILAI_AFE',
     'NILAI_INVESTASI',
-    'STATUS_PERSETUJUAN_TEKNIS',
-    'JENIS_KOMITMEN',
-    'JENIS_TAHAPAN_KEGIATAN',
-    'AREA_KEGIATAN',
-    'RENCANA_TOTAL_KUANTITAS_PEKERJAAN',
+    'STATUS_AFE_ONLINE',
     'RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB',
     'RENCANA_WAKTU_MULAI',
     'RENCANA_WAKTU_SELESAI',
-    'STATUS_AFE_ONLINE',
     'REGION_SKK',
     'PROVINSI',
+    'KENDALA_OPERASIONAL_LAPANGAN',
     'REALISASI_STATUS_PELAKSANAAN',
+    'OUTLOOK_KEGIATAN',
     'REALISASI_WAKTU_MULAI',
     'REALISASI_WAKTU_SELESAI',
-    'OUTLOOK_KEGIATAN',
-    'REALISASI_KUANTITAS_PEKERJAAN_TAHUN_SEBELUMNYA',
-    'REALISASI_KUANTITAS_PEKERJAAN',
-    'P_REALISASI_KEGIATAN_TOTAL_AKUISISI',
+    'REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB',
     'P_REALISASI_KEGIATAN_TOTAL_WPNB',
     'REALISASI_BIAYA_AFE',
     'P_REALISASI_BIAYA_AFE',
-    'JUMLAH_SHOT_POINT',
+    'TOPOGRAFI',
+    'BRIDGING',
     'OBJEKTIF',
     'LINTASAN_MELALUI_SUMUR',
-    'NAMA_PNL',
+    'NAMA_STRUKTUR_PNL',
     'PROSPECT',
     'LEAD',
     'STATUS_RESOURCE_LAINNYA',
     'PLAY',
+
     'RR_P50_OIL_MMBOE',
     'RR_P50_GAS_BSCF',
     'RR_TOTAL_P50_MMBOE',
     'FULL_FOLD',
-    'FULL_FOLD_COVERAGE',
+    'NEAR_OFFSET_M',
+    'FAR_OFFSET_M',
+    'SHOT_POINT_INTERVAL_M',
+    'RECEIVER_LINE_INTERVAL_M',
+    'JUMLAH_SHOT_POINT_ESTIMATED',
+    'SAMPLING_RATE_MS',
+    'RECORD_LENGTH_S',
+    'PANJANG_STREAMER',
+    'JENIS_RECEIVER',
+
+    'X_LONGITUDE',
+    'Y_LATITUDE',
+
     'P_WPNB_WP_AFE_TEKNIS',
     'P_VALIDASI_PARAMETER_DESAIN',
-    'P_PENGADAAN_BARANG_JASA',
-    'P_IZIN_UKL_UPL',
-    'P_IZIN_PEMBERITAHUAN_PELAKSANAAN',
-    'P_IZIN_OPEN_AREA',
-    'P_IZIN_K3S_LAINNYA',
-    'P_IZIN_PELEDAK',
-    'P_IZIN_PPKH',
-    'P_SECURITY_CLEARANCE',
+    'P_SURAT_PEMBERITAHUAN_PELAKSANAAN',
     'P_LIASON_OFFICE',
-    'P_PPKA',
-    'P_SERTIFIKAT_KEAHLIAN',
+    'P_SERTIFIKAT_PERSONEL_SKNI',
     'P_PROJECT_SUMMARY_MOM_SOW',
-    'P_SOSIALISASI',
-    'P_IZIN_HELLDECK',
+    'P_IZIN_HELIDECK',
+    'P_PPKA',
     'P_MAKLUMAT_PELAYARAN',
-    'P_BERITA_PELAUT_INDONESIA'
+    'P_BERITA_PELAUT_INDONESIA',
+    'P_SCOUTING',
+    'P_SOSIALISASI',
+    'P_IZIN_PEMDA',
+    'P_IZIN_PPKH',
+    'P_IZIN_UKL_UPL',
+    'P_IZIN_INSTANSI_LAIN',
+    'P_IZIN_K3S_LAIN',
+    'P_IZIN_OPEN_AREA',
+    'P_IZIN_PELEDAK',
+    'P_SECURITY_CLEARANCE',
+
+    'P_PENGADAAN_KONTRAKTOR_SURVEI',
+    'P_PENGADAAN_BAHAN_PELEDAK',
+    'P_PENGADAAN_JASA_KENDALI_MUTU',
+    'P_MOBILISASI',
+    'P_ADVANCE_PARTY',
+
+    'P_BASIC_PARTY',
+    'P_REKLAMASI',
+    'P_KOMPENSASI_GANTI_RUGI',
+    'P_DEMOBILISASI'
 ]

@@ -1,6 +1,7 @@
 //
 //
-const GeoSpatialTitikKegiatan = require('../model/GeoSpatialTitikKegiatan')
+// const GeoSpatialTitikKegiatan = require('../model/GeoSpatialTitikKegiatan')
+const Kegiatan = require('../model/Kegiatan')
 
 
 const info_select_project = async (req, res) => {
@@ -10,34 +11,40 @@ const info_select_project = async (req, res) => {
     let tmp = []
 
     if (arr_JENIS_KEGIATAN && arr_JENIS_KEGIATAN.length > 0)
-        tmp.push({ "properties.JENIS_KEGIATAN" : { $in: arr_JENIS_KEGIATAN } })
+        tmp.push({ "info.JENIS_KEGIATAN" : { $in: arr_JENIS_KEGIATAN } })
 
     if (arr_HOLDING && arr_HOLDING.length > 0)
-        tmp.push({ "properties.HOLDING" : { $in: arr_HOLDING } })
+        tmp.push({ "info.HOLDING" : { $in: arr_HOLDING } })
 
     if (arr_WK && arr_WK.length > 0)
-            tmp.push({ "properties.WK" : { $in: arr_WK } })
+            tmp.push({ "info.WK" : { $in: arr_WK } })
 
 
     let criteria = {}
     if (tmp.length > 0)
         criteria = { $and: tmp }
 
-    let arr  = await GeoSpatialTitikKegiatan.find(criteria).lean()
+    try {
+        let tmp = []
+        let arr  = await Kegiatan.find(criteria).lean().select("_id info.LABEL info.X_LONGITUDE info.Y_LATITUDE info.WK info.KKKS info.NAMA_KEGIATAN info.HOLDING info.JENIS_KEGIATAN info.REALISASI_STATUS_PELAKSANAAN info.REALISASI_WAKTU_MULAI")
 
-    let tepl = null
-    let features = []
-    if (arr && arr.length >= 0) {
-        let { parent, ...otherKeys } = arr[0]
-        tepl = { ...parent }
-        console.log(tepl)
         for (let i=0; i<arr.length; i++) {
-            let { parent, ...otherKeys } = arr[i]
-            features.push({...otherKeys})
+            tmp.push({
+                _id: arr[i]['_id'],
+                ...arr[i]['info']
+            })
         }
-        tepl['features'] = features
-    }
 
+        return res.status(200).json({
+            isSuccess: true,
+            data: tmp,
+        })
+    } catch (error) {
+        return res.status(200).json({
+            isSuccess: false,
+            message: error.message
+        })
+    }
 
 
     return res.status(200).json(tepl)

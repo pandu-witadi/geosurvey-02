@@ -86,4 +86,4 @@ async function insert_list(client, dbase, collection, src) {
     }
 }
 
-insert_list(client, 'MERN-geosurvey-01', 'KKKSStudi', unique_obj).catch(console.dir)
+insert_list(client,  CF.mongoose.database, 'KKKSStudi', unique_obj).catch(console.dir)

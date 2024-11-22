@@ -1,6 +1,7 @@
 //
 //
 
+
 const appCurrentDateTime = () => {
     const curDateTime = new Date()
     let strDate =
@@ -15,6 +16,19 @@ const appCurrentDateTime = () => {
     }
 }
 
+function ExcelDateToJSDate(serial) {
+    if (serial) {
+        let m = Date.parse(serial); //GMT date in milliseconds
+
+        let mTZ = m + 9 * 3600 * 1000; //Asia/Tashkent +5 time zone. 18.000.000 = 5 hours in milliseconds.
+
+        return new Date(mTZ);
+    } else
+        return null
+
+}
+
 module.exports = {
-    appCurrentDateTime
+    appCurrentDateTime,
+    ExcelDateToJSDate
 }

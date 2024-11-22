@@ -88,4 +88,4 @@ async function insert_obj(client, dbase, collection, src, col_name, parent) {
     }
 }
 
-insert_obj(client, 'MERN-geosurvey-01', 'GeoSpatialWK', features, target_col, otherKeys).catch(console.dir)
+insert_obj(client, CF.mongoose.database, 'GeoSpatialWK', features, target_col, otherKeys).catch(console.dir)

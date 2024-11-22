@@ -23,48 +23,53 @@ let api = {
         }
     },
     "dashboard": {
-        "/api/dashboard/kegiatan": {
-            "method": "POST",
-            "url": "/api/dashboard/kegiatan",
-            "input": {
-                "arr_TAHUN": [
-                    2024
-                ],
-                "arr_JENIS_KEGIATAN": [
-                ],
-            	"arr_HOLDING": [
-            	],
-            	"arr_WK": [
-            	]
+        "kegiatan": {
+            "POST   /api/dashboard/kegiatan": {
+                "goal": "Query - find_select",
+                "url": "/api/dashboard/kegiatan",
+                "input": {
+                    "arr_TAHUN": [
+                        2024
+                    ],
+                    "arr_JENIS_KEGIATAN": [
+                    ],
+                    "arr_HOLDING": [
+                    ],
+                    "arr_WK": [
+                    ]
+                },
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "select dashboard Kegiatan"
             },
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
-            },
-            "desc": "post dashboard Kegiatan"
         },
-        "/api/dashboard/studi": {
-            "method": "POST",
-            "url": "/api/dashboard/studi`",
-            "input": {
-                "arr_TAHUN": [
-                    2024
-                ],
-                "arr_TIPE_STUDI": [
-                ],
-            	"arr_HOLDING": [
-            	],
-            	"arr_WK": [
-            	]
+        "studi": {
+            "POST   /api/dashboard/studi": {
+                "goal": "Query - find_select",
+                "url": "/api/dashboard/studi`",
+                "input": {
+                    "arr_TAHUN": [
+                        2024
+                    ],
+                    "arr_TIPE_STUDI": [
+                    ],
+                	"arr_HOLDING": [
+                	],
+                	"arr_WK": [
+                	]
+                },
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "select dashboard Studi"
             },
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
-            },
-            "desc": "post dashboard Studi"
         },
+
+
     },
     "geospatial": {
-        "/api/geospatial/WK": {
-            "method": "POST",
+        "POST   /api/geospatial/WK": {
             "url": "/api/geospatial/WK",
             "input": {
                 "arr_TIPE_STUDI": [
@@ -80,8 +85,7 @@ let api = {
             },
             "desc": "get geospatial polygon WK"
         },
-        "/api/geospatial/titik-kegiatan": {
-            "method": "POST",
+        "POST   /api/geospatial/titik-kegiatan": {
             "url": "/api/geospatial/titik-kegiatan",
             "input": {
                 "arr_JENIS_KEGIATAN": [
@@ -96,8 +100,7 @@ let api = {
             },
             "desc": "get geospatial titik Kegiatan"
         },
-        "/api/geospatial/titik-studi": {
-            "method": "POST",
+        "POST   /api/geospatial/titik-studi": {
             "url": "/api/geospatial/titik-kegiatan",
             "input": {
                 "arr_TIPE_STUDI": [
@@ -115,122 +118,134 @@ let api = {
         },
     },
     "WK": {
-        "/api/WK/kegiatan/q_find-all": {
-            "method": "GET",
-            "url": "/api/WK/kegiatan/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "kegiatan": {
+            "GET   /api/WK/kegiatan/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/WK/kegiatan/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get WK Kegiatan find-all"
             },
-            "desc": "get WK Kegiatan find-all"
+            "GET  /api/WK/kegiatan/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/WK/kegiatan/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get WK Kegiatan find-all summary"
+            },
         },
-        "/api/WK/kegiatan/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/WK/kegiatan/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "studi": {
+            "GET  /api/WK/studi/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/WK/studi/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get WK studi find-all"
             },
-            "desc": "get WK Kegiatan find-all summary"
-        },
-        "/api/WK/studi/q_find-all": {
-            "method": "GET",
-            "url": "/api/WK/studi/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+            "GET   /api/WK/studi/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/WK/studi/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get WK studi find-all summary"
             },
-            "desc": "get WK studi find-all"
-        },
-        "/api/WK/studi/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/WK/studi/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
-            },
-            "desc": "get WK studi find-all summary"
         },
     },
     "holding": {
-        "/api/holding/kegiatan/q_find-all": {
-            "method": "GET",
-            "url": "/api/holding/kegiatan/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "kegiatan": {
+            "GET   /api/holding/kegiatan/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/holding/kegiatan/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get holding Kegiatan find-all"
             },
-            "desc": "get holding Kegiatan find-all"
+            "GET   /api/holding/kegiatan/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/holding/kegiatan/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get holding Kegiatan find-all summary"
+            },
         },
-        "/api/holding/kegiatan/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/holding/kegiatan/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "studi": {
+            "GET   /api/holding/studi/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/holding/studi/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get holding studi find-all"
             },
-            "desc": "get holding Kegiatan find-all summary"
-        },
-        "/api/holding/studi/q_find-all": {
-            "method": "GET",
-            "url": "/api/holding/studi/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+            "GET   /api/holding/studi/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/holding/studi/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get holding studi find-all summary"
             },
-            "desc": "get holding studi find-all"
-        },
-        "/api/holding/studi/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/WK/studi/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
-            },
-            "desc": "get holding studi find-all summary"
         },
     },
     "KKKS": {
-        "/api/KKKS/kegiatan/q_find-all": {
-            "method": "GET",
-            "url": "/api/KKKS/kegiatan/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "kegiatan": {
+            "GET   /api/KKKS/kegiatan/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/KKKS/kegiatan/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get KKKS Kegiatan find-all"
             },
-            "desc": "get KKKS Kegiatan find-all"
+            "GET   /api/KKKS/kegiatan/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/KKKS/kegiatan/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get KKKS Kegiatan find-all summary"
+            },
         },
-        "/api/KKKS/kegiatan/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/KKKS/kegiatan/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+        "studi": {
+            "GET   /api/KKKS/studi/q_find-all": {
+                "goal": "Query - find_all",
+                "url": "/api/KKKS/studi/q_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get KKKS studi find-all"
             },
-            "desc": "get KKKS Kegiatan find-all summary"
-        },
-        "/api/KKKS/studi/q_find-all": {
-            "method": "GET",
-            "url": "/api/KKKS/studi/q_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
+            "GET   /api/KKKS/studi/q-s_find-all": {
+                "goal": "Query - find_all_summary",
+                "url": "/api/KKKS/studi/q-s_find-all",
+                "input": {},
+                "headers": {
+                    "Authorization": "Bearer {jwt_token}"
+                },
+                "desc": "get KKKS studi find-all summary"
             },
-            "desc": "get KKKS studi find-all"
-        },
-        "/api/KKKS/studi/q-s_find-all": {
-            "method": "GET",
-            "url": "/api/KKKS/studi/q-s_find-all",
-            "input": {},
-            "headers": {
-                "Authorization": "Bearer {jwt_token}"
-            },
-            "desc": "get KKKS studi find-all summary"
         },
     },
     "user": {
-        "/api/user/register": {
-            "method": "POST",
+        "POST   /api/user/register": {
+            "goal": "CRUD - create",
             "url": "/api/user/register",
             "input": {
                 "email": "user101@mail.com",
@@ -239,8 +254,8 @@ let api = {
             },
             "desc": "user register"
         },
-        "/api/user/login": {
-            "method": "POST",
+        "POST   /api/user/login": {
+            "goal": "Query - login",
             "url": "/api/user/login",
             "input": {
             	"email": "user101@mail.com",
@@ -250,8 +265,8 @@ let api = {
         },
     },
     "studi": {
-        "/api/studi/q_select": {
-            "method": "POST",
+        "POST   /api/studi/q_select": {
+            "goal": "Query - find_select",
             "url": "/api/studi/q_select",
             "input": {
                 "arr_TAHUN": [
@@ -261,18 +276,46 @@ let api = {
                     "Studi Prospektivitas"
             	],
             	"arr_HOLDING": [
-
             	],
             	"arr_WK": [
             	]
             },
-            "desc": "test get check server health and API"
+            "desc": "select list studi"
+        },
+        "POST  /api/studi": {
+            "goal": "CRUD - create",
+            "url": "/api/studi",
+            "input": {
+                "NAMA_STUDI": "test",
+
+            },
+            "desc": "create studi"
+        },
+        "GET   /api/studi/:studiId": {
+            "goal": "CRUD - read",
+            "url": "/api/studi/:studiId",
+            "input": {},
+            "desc": "get studi by studiId"
+        },
+        "PUT   /api/studi/:studiId": {
+            "goal": "CRUD - update",
+            "url": "/api/studi/:studiId",
+            "input": {
+                "NO_AFE": "1229-6373"
+            },
+            "desc": "update studi by studiId"
+        },
+        "DELETE   /api/studi/:studiId": {
+            "goal": "CRUD - delete",
+            "url": "/api/studi/:studiId",
+            "input": {},
+            "desc": "delete studi by studiId"
         },
     },
     "kegiatan": {
-        "/api/kegiatan/q_select": {
-            "method": "POST",
+        "POST  /api/kegiatan/q_select": {
             "url": "/api/kegiatan/q_select",
+            "goal": "Query - find_select",
             "input": {
                 "arr_TAHUN": [
                     2024
@@ -280,26 +323,40 @@ let api = {
             	"arr_JENIS_KEGIATAN": [
             	],
             	"arr_HOLDING": [
-
             	],
             	"arr_WK": [
             	]
             },
-            "desc": "get list kegiatan"
+            "desc": "select list kegiatan"
         },
-        "/api/kegiatan/:kegiatanId": {
-            "method": "GET",
+        "POST  /api/kegiatan": {
+            "goal": "CRUD - create",
+            "url": "/api/kegiatan",
+            "input": {
+                "NAMA_KEGIATAN": "test",
+
+            },
+            "desc": "create kegiatan"
+        },
+        "GET   /api/kegiatan/:kegiatanId": {
+            "goal": "CRUD - read",
             "url": "/api/kegiatan/:kegiatanId",
             "input": {},
             "desc": "get kegiatan by kegiatanId"
         },
-        "/api/kegiatan/:kegiatanId": {
-            "method": "PUT",
+        "PUT   /api/kegiatan/:kegiatanId": {
+            "goal": "CRUD - update",
             "url": "/api/kegiatan/:kegiatanId",
             "input": {
                 "Y_LATITUDE":-2.392641
             },
-            "desc": "update kegiatan"
+            "desc": "update kegiatan by kegiatanId"
+        },
+        "DELETE   /api/kegiatan/:kegiatanId": {
+            "goal": "CRUD - delete",
+            "url": "/api/kegiatan/:kegiatanId",
+            "input": {},
+            "desc": "delete kegiatan by kegiatanId"
         },
     },
 

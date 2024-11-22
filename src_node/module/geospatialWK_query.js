@@ -33,7 +33,7 @@ const info_select_project = async (req, res) => {
     if (arr && arr.length >= 0) {
         let { parent, ...otherKeys } = arr[0]
         tepl = { ...parent }
-        console.log(tepl)
+        // console.log(tepl)
         for (let i=0; i<arr.length; i++) {
             let { parent, ...otherKeys } = arr[i]
             features.push({...otherKeys})

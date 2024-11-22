@@ -36,12 +36,12 @@ const find_all_summary = async (req, res) => {
 
 const find_by_select = async (req, res) => {
 
-    let { arr_YEAR, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
+    let { arr_TAHUN, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
 
     let tmp = []
 
-    if (arr_YEAR && arr_YEAR.length > 0)
-        tmp.push({ "info.YEAR" : { $in: arr_YEAR } })
+    if (arr_TAHUN && arr_TAHUN.length > 0)
+        tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })
 
     if (arr_JENIS_KEGIATAN && arr_JENIS_KEGIATAN.length > 0)
         tmp.push({ "info.JENIS_KEGIATAN" : { $in: arr_JENIS_KEGIATAN } })
@@ -75,36 +75,33 @@ const find_by_select = async (req, res) => {
     }
 }
 
-const find_by_id = async (req, res) => {
-
-    const { kegiatanId } = req.params
-
-    if (!kegiatanId)
-        return res.status(200).json({
-            isSuccess: false,
-            message: "kegiatanId not available"
-        })
-
-    try {
-        const obj = await Kegiatan.findById(kegiatanId)
-        return res.status(200).json({
-            isSuccess: true,
-            data: obj
-        })
-
-    } catch (error) {
-        return res.status(200).json({
-            isSuccess: false,
-            message: error.message
-        })
-    }
-
-
-}
+// const find_by_id = async (req, res) => {
+//     const { kegiatanId } = req.params
+//
+//     if (!kegiatanId)
+//         return res.status(200).json({
+//             isSuccess: false,
+//             message: "kegiatanId not available"
+//         })
+//
+//     try {
+//         const obj = await Kegiatan.findById(kegiatanId)
+//         return res.status(200).json({
+//             isSuccess: true,
+//             data: obj
+//         })
+//
+//     } catch (error) {
+//         return res.status(200).json({
+//             isSuccess: false,
+//             message: error.message
+//         })
+//     }
+// }
 // -----------------------------------------------------------------------------
 module.exports = {
     find_all,
     find_all_summary,
     find_by_select,
-    find_by_id
+    // find_by_id
 }

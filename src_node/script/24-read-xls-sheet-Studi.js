@@ -78,35 +78,53 @@ const create_project = (obj) => {
             WK : obj['WK'] || "",
             STATUS_WK : obj['STATUS_WK'] || "",
 
+            TIPE_KONTRAK: obj['TIPE_KONTRAK'] || "",
+            BASIN:  obj['BASIN'] || "",
+            REGION:  obj['REGION'] || "",
             NAMA_STUDI : obj['NAMA_STUDI'] || "",
-            TIPE_STUDI : obj['TIPE_STUDI'] || "",
-            BASIN : obj['BASIN'] || "",
+            STRUCTURE_NAME:  obj['STRUCTURE_NAME'] || "",
+
+            PROSPECT:  obj['PROSPECT'] || "",
+            LEAD:  obj['LEAD'] || "",
+            UNDEVELOPED:  obj['UNDEVELOPED'] || "",
+            RR_PROSPECT:  obj['RR_PROSPECT'] || 0,
+            RR_LEAD:  obj['RR_LEAD'] || 0,
+            RR_UNDEVELOPED:  obj['RR_UNDEVELOPED'] || 0,
+            RR_MMBOE_TOTAL:  obj['RR_MMBOE_TOTAL'] || 0,
+            RR_MMBOE_INPLACE:  obj['RR_MMBOE_INPLACE'] || 0,
+
+            TIPE_AFE: obj['TIPE_AFE'] || "",
+            NO_AFE: obj['NO_AFE'] || "",
+            STATUS_USULAN_KEGIATAN: obj['STATUS_USULAN_KEGIATAN'] || "",
+            JENIS_KOMITMEN: obj['JENIS_KOMITMEN'] || "",
 
             RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) || null,
             RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) || null,
+            RENCANA_ANGGARAN_AFE_INVESTASI:  obj['RENCANA_ANGGARAN_AFE_INVESTASI'] || 0,
+            STATUS_WPNB: obj['STATUS_WPNB'] || "",
+            KETERANGAN_RENCANA: obj['KETERANGAN_RENCANA'] || "",
+
+            TIPE: obj['TIPE'] || "",
+            TIPE_STUDI: obj['TIPE_STUDI'] || "",
+            PIC: obj['PIC'] || "",
+            VALIDATOR: obj['VALIDATOR'] || "",
+            PIC_KKKS: obj['PIC_KKKS'] || "",
+
+            P_PROGRESS_PELAKSANAAN: obj['P_PROGRESS_PELAKSANAAN'] || 0,
+            REALISASI_ANGGARAN_AFE_INVESTASI: obj['REALISASI_ANGGARAN_AFE_INVESTASI'] || 0,
             REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || null,
             REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) || null,
+            KETERANGAN_REALISASI: obj['KETERANGAN_REALISASI'] || "",
 
+            VENDOR: obj['VENDOR'] || "",
             REALISASI_STATUS_PELAKSANAAN: obj['REALISASI_STATUS_PELAKSANAAN'] || "",
+            PIC_POKJA_CHECK: obj['PIC_POKJA_CHECK'] || "",
+            X_LONGITUDE: obj['X_LONGITUDE'] || 0,
+            Y_LATITUDE: obj['Y_LATITUDE'] || 0,
 
-            RENCANA_ANGGARAN_AFE_INVESTASI: obj['RENCANA_ANGGARAN_AFE_INVESTASI'] || 0,
-            REALISASI_ANGGARAN_AFE_INVESTASI: obj['REALISASI_ANGGARAN_AFE_INVESTASI'] || 0,
-
-            RR_MMBOE: obj['RR_MMBOE'] || 0,
-            RR_MMBOE_INPLACE: obj['RR_MMBOE_INPLACE'] || 0,
-
-        },
-        raw: { ...obj },
+            RR_TOTAL_MMBOE: obj['RR_TOTAL_MMBOE'] || 0,
+        }
     }
-
-
-    // // calculate value
-    // if (tmp.info.TIPE_KONTRAK === 'PSC') {
-    //     tmp.calc.TOTAL_INVESTASI = tmp.AFE.NILAI_AFE
-    // } else if (tmp.info.TIPE_KONTRAK === 'GS') {
-    //     tmp.calc.TOTAL_INVESTASI = tmp.info.NILAI_INVESTASI
-    // }
-
 
     return tmp
 }
@@ -138,47 +156,53 @@ async function insert_obj(client, dbase, collection, src, col_name) {
     }
 }
 
-insert_obj(client, 'MERN-geosurvey-01', 'Studi', sheet_json, target_col).catch(console.dir)
+insert_obj(client,  CF.mongoose.database, 'Studi', sheet_json, target_col).catch(console.dir)
 
 
 
 let column_names = [
-  'TAHUN',
-  'LABEL',
-  'KKKS',
-  'HOLDING',
-  'WK',
-  'STATUS_WK',
-  'TIPE_KONTRAK',
-  'BASIN',
-  'NAMA_STUDI',
-  'NAMA_STRUKTUR_PROSPECT_LEAD',
-  'PROSPECT_AND_UNDEVELOPED',
-  'LEAD',
-  'RR_MBOE',
-  'RR_MMBOE_INPLACE',
-  'TIPE_AFE',
-  'NO_AFE',
-  'STATUS_USULAN_KEGIATAN',
-  'JENIS_KOMITMEN',
-  'RENCANA_WAKTU_MULAI',
-  'RENCANA_WAKTU_SELESAI',
-  'RENCANA_ANGGARAN_AFE_INVESTASI',
-  'STATUS_WPNB',
-  'KETERANGAN_RENCANA',
-  'TIPE',
-  'TIPE_STUDI',
-  'PIC',
-  'VALIDATOR',
-  'PIC_KKKS',
-  'P_PROGRESS_PELAKSANAAN',
-  'REALISASI_ANGGARAN_AFE_INVESTASI',
-  'REALISASI_WAKTU_MULAI',
-  'REALISASI_WAKTU_SELESAI',
-  'KETERANGAN_REALISASI',
-  'VENDOR',
-  'REALISASI_STATUS_PELAKSANAAN',
-  'PIC_POKJA_CHECK',
-  'X_LONGITUDE',
-  'Y_LATITUDE'
+    'TAHUN',
+    'LABEL',
+    'KKKS',
+    'HOLDING',
+    'WK',
+    'STATUS_WK',
+    'TIPE_KONTRAK',
+    'BASIN',
+    'REGION',
+    'NAMA_STUDI',
+    'STRUCTURE_NAME',
+    'PROSPECT',
+    'LEAD',
+    'UNDEVELOPED',
+    'RR_PROSPECT',
+    'RR_LEAD',
+    'RR_UNDEVELOPED',
+    'RR_MMBOE_TOTAL',
+    'RR_MMBOE_INPLACE',
+    'TIPE_AFE',
+    'NO_AFE',
+    'STATUS_USULAN_KEGIATAN',
+    'JENIS_KOMITMEN',
+    'RENCANA_WAKTU_MULAI',
+    'RENCANA_WAKTU_SELESAI',
+    'RENCANA_ANGGARAN_AFE_INVESTASI',
+    'STATUS_WPNB',
+    'KETERANGAN_RENCANA',
+    'TIPE',
+    'TIPE_STUDI',
+    'PIC',
+    'VALIDATOR',
+    'PIC_KKKS',
+    'P_PROGRESS_PELAKSANAAN',
+    'REALISASI_ANGGARAN_AFE_INVESTASI',
+    'REALISASI_WAKTU_MULAI',
+    'REALISASI_WAKTU_SELESAI',
+    'KETERANGAN_REALISASI',
+    'VENDOR',
+    'REALISASI_STATUS_PELAKSANAAN',
+    'PIC_POKJA_CHECK',
+    'X_LONGITUDE',
+    'Y_LATITUDE',
+    'RR_TOTAL_MMBOE'
 ]

@@ -36,7 +36,7 @@ target_sheet_name = process.argv[4]
 console.log('-----------------------------------------')
 
 const sheet_json = XLSX.utils.sheet_to_json(list_sheet[target_sheet_name])
-// console.log(sheet_json[0])
+console.log(sheet_json[0])
 
 console.log('...first json data', sheet_json)
 console.log('...num of row ' + sheet_json.length)

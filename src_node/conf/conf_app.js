@@ -4,7 +4,7 @@ require('dotenv').config()
 
 let CF = {
     app: {
-        name: "MERN-geosurvey",
+        name: "geosurvey_v02",
         version: "0.0.1"
     },
     server: {
@@ -24,8 +24,8 @@ let CF = {
             // useNewUrlParser: true,
             // useUnifiedTopology: true
         },
-        // url : 'mongodb+srv://wamoo:wamoo@devconnector.jdg80.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-        url : 'mongodb://127.0.0.1:27017/MERN-geosurvey-01'
+        uri : 'mongodb://127.0.0.1:27017',
+        database : 'MERN-geosurvey-01',
     },
     jwt: {
         isAuth: false,
@@ -63,5 +63,7 @@ CF.server.path_file = CF.server.host + ':' + CF.server.PORT.toString() + CF.path
 CF.server.path_image = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.image
 CF.server.path_video = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.video
 
+
+CF.mongoose.url  = CF.mongoose.uri + '/' + CF.mongoose.database
 
 module.exports = CF

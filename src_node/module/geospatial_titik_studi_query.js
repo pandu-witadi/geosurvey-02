@@ -1,7 +1,7 @@
 //
 //
-const GeoSpatialTitikStudi = require('../model/GeoSpatialTitikStudi')
-
+// const GeoSpatialTitikStudi = require('../model/GeoSpatialTitikStudi')
+const Studi = require('../model/Studi')
 
 const info_select_project = async (req, res) => {
 
@@ -11,32 +11,38 @@ const info_select_project = async (req, res) => {
     let tmp = []
 
     if (arr_TIPE_STUDI && arr_TIPE_STUDI.length > 0)
-        tmp.push({ "properties.TIPE_STUDI" : { $in: arr_TIPE_STUDI } })
+        tmp.push({ "info.TIPE_STUDI" : { $in: arr_TIPE_STUDI } })
 
     if (arr_HOLDING && arr_HOLDING.length > 0)
-        tmp.push({ "properties.HOLDING" : { $in: arr_HOLDING } })
+        tmp.push({ "info.HOLDING" : { $in: arr_HOLDING } })
 
     if (arr_WK && arr_WK.length > 0)
-            tmp.push({ "properties.WK" : { $in: arr_WK } })
+            tmp.push({ "info.WK" : { $in: arr_WK } })
 
 
     let criteria = {}
     if (tmp.length > 0)
         criteria = { $and: tmp }
 
-    let arr  = await GeoSpatialTitikStudi.find(criteria).lean()
-
-    let tepl = null
-    let features = []
-    if (arr && arr.length >= 0) {
-        let { parent, ...otherKeys } = arr[0]
-        tepl = { ...parent }
-        console.log(tepl)
+    try {
+        let tmp = []
+        let arr  = await Studi.find(criteria).lean().select("_id info.LABEL info.X_LONGITUDE info.Y_LATITUDE info.WK info.KKKS info.NAMA_STUDI info.HOLDING info.TIPE_STUDI info.REALISASI_STATUS_PELAKSANAAN info.REALISASI_WAKTU_MULAI info.RR_MMBOE_TOTAL")
         for (let i=0; i<arr.length; i++) {
-            let { parent, ...otherKeys } = arr[i]
-            features.push({...otherKeys})
+            tmp.push({
+                _id: arr[i]['_id'],
+                ...arr[i]['info']
+            })
         }
-        tepl['features'] = features
+
+        return res.status(200).json({
+            isSuccess: true,
+            data: tmp,
+        })
+    } catch (error) {
+        return res.status(200).json({
+            isSuccess: false,
+            message: error.message
+        })
     }
 
 

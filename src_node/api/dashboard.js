@@ -13,7 +13,7 @@ const { info_select: info_select_kegiatan } = require("../module/dashboard_kegia
 router.post('/kegiatan', authentication, info_select_kegiatan )
 
 const { info_select: info_select_studi } = require("../module/dashboard_studi_query")
-router.post('/kegiatan', authentication, info_select_studi )
+router.post('/studi', authentication, info_select_studi )
 
 
 module.exports = router
