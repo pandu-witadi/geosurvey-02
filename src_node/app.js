@@ -33,14 +33,20 @@ Promise.resolve(app)
 
 
 // for uploading
-console.log('...')
+
 console.log( '__dirname   :  ' + __dirname)
-console.log( '[map file]  :  ' + CF.server.path_file + '  ->  ' + path.join(__dirname, CF.path.file) )
-app.use( '/upload/file', express.static( path.join(__dirname, CF.path.file) ) )
-console.log( '[map image] :  ' + CF.server.path_image + '  ->  ' + path.join(__dirname, CF.path.image) )
-app.use( '/upload/image', express.static( path.join(__dirname, CF.path.image) ) )
-console.log( '[map video] :  ' + CF.server.path_video + '  ->  ' + path.join(__dirname, CF.path.video) )
-app.use( '/upload/video', express.static( path.join(__dirname, CF.path.video) ) )
+// console.log( '[map file]  :  ' + CF.server.path_file + '  ->  ' + path.join(__dirname, CF.path.file) )
+// app.use( '/upload/file', express.static( path.join(__dirname, CF.path.file) ) )
+// console.log( '[map image] :  ' + CF.server.path_image + '  ->  ' + path.join(__dirname, CF.path.image) )
+// app.use( '/upload/image', express.static( path.join(__dirname, CF.path.image) ) )
+// console.log( '[map video] :  ' + CF.server.path_video + '  ->  ' + path.join(__dirname, CF.path.video) )
+// app.use( '/upload/video', express.static( path.join(__dirname, CF.path.video) ) )
+
+console.log('...')
+console.log( '[map kegiatan] :  ' + CF.server.path_kegiatan + '  ->  ' + path.join(__dirname, CF.path.kegiatan) )
+app.use( '/upload/kegiatan', express.static( path.join(__dirname, CF.path.kegiatan) ) )
+console.log( '[map studi] :  ' + CF.server.path_studi + '  ->  ' + path.join(__dirname, CF.path.studi) )
+app.use( '/upload/studi', express.static( path.join(__dirname, CF.path.studi) ) )
 console.log('...')
 
 // use: route

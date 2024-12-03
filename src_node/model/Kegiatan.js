@@ -22,15 +22,14 @@ const info = {
     TIPE_KONTRAK: String,
     STATUS_BUNDLING: String,
     NO_AFE: String,
-    NILAI_AFE: Number,
-    NILAI_INVESTASI: Number,
+    NILAI_AFE_INVESTASI: Number,
     STATUS_AFE_ONLINE: String,
 
-    RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB: Number,
+    RENCANA_KUANTITAS_PEKERJAAN: Number,
     RENCANA_WAKTU_MULAI: Date,
     RENCANA_WAKTU_SELESAI: Date,
 
-    REGION_SKK: String,
+    WILAYAH_INDONESIA: String,
     PROVINSI: String,
     KENDALA_OPERASIONAL_LAPANGAN: String,
     REALISASI_STATUS_PELAKSANAAN: String,
@@ -39,10 +38,10 @@ const info = {
     REALISASI_WAKTU_MULAI: Date,
     REALISASI_WAKTU_SELESAI: Date,
 
-    REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB: Number,
-    P_REALISASI_KEGIATAN_TOTAL_WPNB: Number,
-    REALISASI_BIAYA_AFE: Number,
-    P_REALISASI_BIAYA_AFE: Number,
+    REALISASI_KUANTITAS_PEKERJAAN: Number,
+    P_REALISASI_KEGIATAN: Number,
+    REALISASI_AFE_INVESTASI: Number,
+    P_REALISASI_AFE_INVESTASI: Number,
 
     TOPOGRAFI: String,
     BRIDGING: String,
@@ -67,7 +66,7 @@ const info = {
     SAMPLING_RATE_MS: Number,
     RECORD_LENGTH_S: Number,
     PANJANG_STREAMER: Number,
-    JENIS_RECEIVER: Number,
+    JENIS_RECEIVER: String,
 
     X_LONGITUDE: Number,
     Y_LATITUDE: Number,
@@ -109,11 +108,6 @@ const info = {
 }
 
 
-const calc = {
-    TOTAL_INVESTASI: Number,
-    TOTAL_RESOURCE: Number,
-}
-
 
 const objSchema = new mongoose.Schema(
     {
@@ -127,7 +121,7 @@ const objSchema = new mongoose.Schema(
             default: true
         },
         info: info,
-        calc: calc,
+        tmp: info,
         pupos: {
             type: Object,
             default: undefined

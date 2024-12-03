@@ -6,21 +6,68 @@ const { appCurrentDateTime } = require('../util/time_format')
 
 let api = {
     "test": {
-        "/api/test": {
+        "GET   /api/test": {
             "method": "GET",
-            "url": "/api/test",
             "input": {},
             "desc": "test get check server health and API"
         },
-        "/api/test/auth": {
+        "GET   /api/test/auth": {
             "method": "GET",
-            "url": "/api/test/auth",
             "input": {},
             "headers": {
                 "Authorization": "Bearer {jwt_token}"
             },
             "desc": "test get check server health and API"
         }
+    },
+    "user": {
+        "GET   /api/user/q-find-all": {
+            "goal": "Query - list",
+            "input": {},
+            "desc": "list all user"
+        },
+        "GET   /api/user/:userId": {
+            "goal": "Query - readById",
+            "input": {},
+            "desc": "query single user"
+        },
+        "POST   /api/user/register": {
+            "goal": "CRUD - create",
+            "url": "/api/user/register",
+            "input": {
+                "email": "user101@mail.com",
+                "password": "user101",
+                "username": "user101"
+            },
+            "desc": "user register"
+        },
+        "POST   /api/user/login": {
+            "goal": "Query - login",
+            "url": "/api/user/login",
+            "input": {
+            	"email": "user101@mail.com",
+            	"password": "user101"
+            },
+            "desc": "user login"
+        },
+        "PUT   /api/user/:userId": {
+            "goal": "CRUD - update",
+            "input": {
+                "email": "",
+                "username": "",
+                "role": "kontraktor",
+                "active": false
+            },
+            "desc": "update kegiatan by kegiatanId"
+        },
+        "DELETE   /api/user/:userId": {
+            "goal": "CRUD - delete",
+            "headers": {
+                "Authorization": "Bearer {jwt_token}"
+            },
+            "input": {},
+            "desc": "delete user by userId"
+        },
     },
     "dashboard": {
         "kegiatan": {
@@ -243,27 +290,7 @@ let api = {
             },
         },
     },
-    "user": {
-        "POST   /api/user/register": {
-            "goal": "CRUD - create",
-            "url": "/api/user/register",
-            "input": {
-                "email": "user101@mail.com",
-                "password": "user101",
-                "username": "user101"
-            },
-            "desc": "user register"
-        },
-        "POST   /api/user/login": {
-            "goal": "Query - login",
-            "url": "/api/user/login",
-            "input": {
-            	"email": "user101@mail.com",
-            	"password": "user101"
-            },
-            "desc": "user login"
-        },
-    },
+
     "studi": {
         "POST   /api/studi/q_select": {
             "goal": "Query - find_select",
@@ -376,7 +403,7 @@ const test_get = async (req, res) => {
                 appVersion: CF.app.version,
                 serverDate: servDateTime.strDate,
                 serverTime: servDateTime.serverTime,
-                random: Math.random()
+                random: Math.random(),
             },
             api: api
         })

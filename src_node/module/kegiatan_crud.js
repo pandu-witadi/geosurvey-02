@@ -4,7 +4,10 @@ const Kegiatan = require('../model/Kegiatan')
 const { ExcelDateToJSDate } = require("../util/time_format")
 
 
-const create_info_calc = (obj) => {
+const create_info = (obj) => {
+
+    const curDateTime = new Date()
+
     let info = {
         TAHUN: obj['TAHUN'] || 0,
         NAMA_KEGIATAN: obj['NAMA_KEGIATAN'] || "",
@@ -24,27 +27,26 @@ const create_info_calc = (obj) => {
         TIPE_KONTRAK: obj['TIPE_KONTRAK'] || "",
         STATUS_BUNDLING: obj['STATUS_BUNDLING'] || "",
         NO_AFE: obj['NO_AFE'] || "",
-        NILAI_AFE: obj['NILAI_AFE'] || 0,
-        NILAI_INVESTASI: obj['NILAI_INVESTASI'] || 0,
+        NILAI_AFE_INVESTASI: obj['NILAI_AFE_INVESTASI'] || 0,
         STATUS_AFE_ONLINE: obj['STATUS_AFE_ONLINE'] || "",
 
-        RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
-        RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) ||  new Date(0),
-        RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) ||  new Date(0),
+        RENCANA_KUANTITAS_PEKERJAAN: obj['RENCANA_KUANTITAS_PEKERJAAN'] || 0,
+        RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) ||  new Date(),
+        RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) ||  new Date(),
 
-        REGION_SKK: obj['REGION_SKK'] || "",
+        WILAYAH_INDONESIA: obj['WILAYAH_INDONESIA'] || "",
         PROVINSI: obj['PROVINSI'] || "",
         KENDALA_OPERASIONAL_LAPANGAN: obj['KENDALA_OPERASIONAL_LAPANGAN'] || "",
         REALISASI_STATUS_PELAKSANAAN: obj['REALISASI_STATUS_PELAKSANAAN'] || "",
         OUTLOOK_KEGIATAN: obj['OUTLOOK_KEGIATAN'] || "",
 
-        REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || new Date(0),
-        REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) ||  new Date(0),
+        REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || new Date(),
+        REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) ||  new Date(),
 
-        REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
-        P_REALISASI_KEGIATAN_TOTAL_WPNB: obj['P_REALISASI_KEGIATAN_TOTAL_WPNB'] || 0,
-        REALISASI_BIAYA_AFE: obj['REALISASI_BIAYA_AFE'] || 0,
-        P_REALISASI_BIAYA_AFE: obj['P_REALISASI_BIAYA_AFE'] || 0,
+        REALISASI_KUANTITAS_PEKERJAAN: obj['REALISASI_KUANTITAS_PEKERJAAN'] || 0,
+        P_REALISASI_KEGIATAN: obj['P_REALISASI_KEGIATAN'] || 0,
+        REALISASI_AFE_INVESTASI: obj['REALISASI_AFE_INVESTASI'] || 0,
+        P_REALISASI_AFE_INVESTASI: obj['P_REALISASI_AFE_INVESTASI'] || 0,
 
         TOPOGRAFI: obj['TOPOGRAFI'] || "",
         BRIDGING: obj['BRIDGING'] || "",
@@ -69,7 +71,7 @@ const create_info_calc = (obj) => {
         SAMPLING_RATE_MS: obj['SAMPLING_RATE_MS'] || 0,
         RECORD_LENGTH_S: obj['RECORD_LENGTH_S'] || 0,
         PANJANG_STREAMER: obj['PANJANG_STREAMER'] || 0,
-        JENIS_RECEIVER: obj['JENIS_RECEIVER'] || 0,
+        JENIS_RECEIVER: obj['JENIS_RECEIVER'] || "",
 
         X_LONGITUDE: obj['X_LONGITUDE'] || 0,
         Y_LATITUDE: obj['Y_LATITUDE'] || 0,
@@ -111,19 +113,9 @@ const create_info_calc = (obj) => {
 
     }
 
-    let calc = {
-        TOTAL_INVESTASI: 0,
-        TOTAL_RESOURCE: 0
-    }
 
-    // calculate value
-    if (info.TIPE_KONTRAK === 'PSC') {
-        calc.TOTAL_INVESTASI = info.NILAI_AFE
-    } else if (info.TIPE_KONTRAK === 'GS') {
-        calc.TOTAL_INVESTASI = info.NILAI_INVESTASI
-    }
 
-    return { info, calc }
+    return info
 }
 
 // --- create ---
@@ -146,11 +138,10 @@ const create = async (req, res) => {
     }
 
     try {
-        let { info, calc } = create_info_calc(req.body)
+        let info = create_info(req.body)
         const obj = new Kegiatan({
             name: NAMA_KEGIATAN,
-            info: info,
-            calc: calc
+            info: info
         })
         let kegiatan = await obj.save()
         return res.status(201).json({
@@ -212,7 +203,7 @@ const update = async ( req, res) => {
                 update_info['info.' + key] = req.body[key]
         }
     }
-    console.log(update_info)
+    // console.log(update_info)
 
     try {
         let filter =  { _id: kegiatanId }
@@ -240,7 +231,7 @@ const update = async ( req, res) => {
 }
 
 
-// --- read ---
+// --- delete ---
 const deleteById = async ( req, res) => {
     let { kegiatanId } = req.params
     try {

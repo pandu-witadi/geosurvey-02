@@ -70,6 +70,7 @@ function ExcelDateToJSDate(serial) {
 const create_project = (obj) => {
 
     let tmp = {
+        active: true,
         name: obj['NAMA_KEGIATAN'] || "",
         info: {
             TAHUN: obj['TAHUN'] || 0,
@@ -90,27 +91,26 @@ const create_project = (obj) => {
             TIPE_KONTRAK: obj['TIPE_KONTRAK'] || "",
             STATUS_BUNDLING: obj['STATUS_BUNDLING'] || "",
             NO_AFE: obj['NO_AFE'] || "",
-            NILAI_AFE: obj['NILAI_AFE'] || 0,
-            NILAI_INVESTASI: obj['NILAI_INVESTASI'] || 0,
+            NILAI_AFE_INVESTASI: obj['NILAI_AFE_INVESTASI'] || 0,
             STATUS_AFE_ONLINE: obj['STATUS_AFE_ONLINE'] || "",
 
-            RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['RENCANA_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
-            RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) || null,
-            RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) || null,
+            RENCANA_KUANTITAS_PEKERJAAN: obj['RENCANA_KUANTITAS_PEKERJAAN'] || 0,
+            RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) ||  new Date(),
+            RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) ||  new Date(),
 
-            REGION_SKK: obj['REGION_SKK'] || "",
+            WILAYAH_INDONESIA: obj['WILAYAH_INDONESIA'] || "",
             PROVINSI: obj['PROVINSI'] || "",
             KENDALA_OPERASIONAL_LAPANGAN: obj['KENDALA_OPERASIONAL_LAPANGAN'] || "",
             REALISASI_STATUS_PELAKSANAAN: obj['REALISASI_STATUS_PELAKSANAAN'] || "",
             OUTLOOK_KEGIATAN: obj['OUTLOOK_KEGIATAN'] || "",
 
-            REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || null,
-            REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) || null,
+            REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) ||  new Date(),
+            REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) ||  new Date(),
 
-            REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB: obj['REALISASI_KUANTITAS_PEKERJAAN_TAHUN_WPNB'] || 0,
-            P_REALISASI_KEGIATAN_TOTAL_WPNB: obj['P_REALISASI_KEGIATAN_TOTAL_WPNB'] || 0,
-            REALISASI_BIAYA_AFE: obj['REALISASI_BIAYA_AFE'] || 0,
-            P_REALISASI_BIAYA_AFE: obj['P_REALISASI_BIAYA_AFE'] || 0,
+            REALISASI_KUANTITAS_PEKERJAAN: obj['REALISASI_KUANTITAS_PEKERJAAN'] || 0,
+            P_REALISASI_KEGIATAN: obj['P_REALISASI_KEGIATAN'] || 0,
+            REALISASI_AFE_INVESTASI: obj['REALISASI_AFE_INVESTASI'] || 0,
+            P_REALISASI_AFE_INVESTASI: obj['P_REALISASI_AFE_INVESTASI'] || 0,
 
             TOPOGRAFI: obj['TOPOGRAFI'] || "",
             BRIDGING: obj['BRIDGING'] || "",
@@ -135,7 +135,7 @@ const create_project = (obj) => {
             SAMPLING_RATE_MS: obj['SAMPLING_RATE_MS'] || 0,
             RECORD_LENGTH_S: obj['RECORD_LENGTH_S'] || 0,
             PANJANG_STREAMER: obj['PANJANG_STREAMER'] || 0,
-            JENIS_RECEIVER: obj['JENIS_RECEIVER'] || 0,
+            JENIS_RECEIVER: obj['JENIS_RECEIVER'] || "",
 
             X_LONGITUDE: obj['X_LONGITUDE'] || 0,
             Y_LATITUDE: obj['Y_LATITUDE'] || 0,
@@ -175,21 +175,8 @@ const create_project = (obj) => {
             P_KOMPENSASI_GANTI_RUGI: obj['P_KOMPENSASI_GANTI_RUGI'] || 0,
             P_BASIC_PARTY: obj['P_DEMOBILISASI'] || 0,
 
-        },
-        calc: {
-            TOTAL_INVESTASI: 0,
-            TOTAL_RESOURCE: 0
         }
     }
-
-
-    // calculate value
-    if (tmp.info.TIPE_KONTRAK === 'PSC') {
-        tmp.calc.TOTAL_INVESTASI = tmp.info.NILAI_AFE
-    } else if (tmp.info.TIPE_KONTRAK === 'GS') {
-        tmp.calc.TOTAL_INVESTASI = tmp.info.NILAI_INVESTASI
-    }
-
 
     return tmp
 }
@@ -225,7 +212,7 @@ insert_obj(client,  CF.mongoose.database, 'Kegiatan', sheet_json, target_col).ca
 
 
 
-let column_names = [
+let column_names_v4 = [
     'TAHUN',
     'LABEL',
     'NAMA_KEGIATAN',
@@ -317,4 +304,92 @@ let column_names = [
     'P_REKLAMASI',
     'P_KOMPENSASI_GANTI_RUGI',
     'P_DEMOBILISASI'
+]
+
+let column_names_v5 = [
+  'TAHUN',
+  'LABEL',
+  'NAMA_KEGIATAN',
+  'WK',
+  'STATUS_WK',
+  'KKKS',
+  'HOLDING',
+  'STATUS_USULAN_PROGRAM',
+  'JENIS_KEGIATAN',
+  'JENIS_KOMITMEN',
+  'JENIS_TAHAPAN_KEGIATAN',
+  'AREA_KEGIATAN',
+  'STATUS_PERSETUJUAN_TEKNIS',
+  'TIPE_KONTRAK',
+  'STATUS_BUNDLING',
+  'NO_AFE',
+  'NILAI_AFE_INVESTASI',
+  'STATUS_AFE_ONLINE',
+  'RENCANA_KUANTITAS_PEKERJAAN',
+  'RENCANA_WAKTU_MULAI',
+  'RENCANA_WAKTU_SELESAI',
+  'WILAYAH_INDONESIA',
+  'PROVINSI',
+  'KENDALA_OPERASIONAL_LAPANGAN',
+  'REALISASI_STATUS_PELAKSANAAN',
+  'OUTLOOK_KEGIATAN',
+  'REALISASI_WAKTU_MULAI',
+  'REALISASI_WAKTU_SELESAI',
+  'REALISASI_KUANTITAS_PEKERJAAN',
+  'P_REALISASI_KEGIATAN',
+  'REALISASI_AFE_INVESTASI',
+  'P_REALISASI_AFE_INVESTASI',
+  'TOPOGRAFI',
+  'BRIDGING',
+  'OBJEKTIF',
+  'LINTASAN_MELALUI_SUMUR',
+  'NAMA_STRUKTUR_PNL',
+  'PROSPECT',
+  'LEAD',
+  'STATUS_RESOURCE_LAINNYA',
+  'PLAY',
+  'RR_P50_OIL_MMBOE',
+  'RR_P50_GAS_BSCF',
+  'RR_TOTAL_P50_MMBOE',
+  'FULL_FOLD',
+  'NEAR_OFFSET_M',
+  'FAR_OFFSET_M',
+  'SHOT_POINT_INTERVAL_M',
+  'RECEIVER_LINE_INTERVAL_M',
+  'JUMLAH_SHOT_POINT_ESTIMATED',
+  'SAMPLING_RATE_MS',
+  'RECORD_LENGTH_S',
+  'PANJANG_STREAMER',
+  'JENIS_RECEIVER',
+  'X_LONGITUDE',
+  'Y_LATITUDE',
+  'P_WPNB_WP_AFE_TEKNIS',
+  'P_VALIDASI_PARAMETER_DESAIN',
+  'P_SURAT_PEMBERITAHUAN_PELAKSANAAN',
+  'P_LIASON_OFFICE',
+  'P_SERTIFIKAT_PERSONEL_SKNI',
+  ' P_PROJECT_SUMMARY_MOM_SOW',
+  'P_IZIN_HELIDECK',
+  'P_PPKA',
+  'P_MAKLUMAT_PELAYARAN',
+  'P_BERITA_PELAUT_INDONESIA',
+  'P_SCOUTING',
+  'P_SOSIALISASI',
+  'P_IZIN_PEMDA',
+  'P_IZIN_PPKH',
+  'P_IZIN_UKL_UPL',
+  'P_IZIN_INSTANSI_LAIN',
+  'P_IZIN_K3S_LAIN',
+  'P_IZIN_OPEN_AREA',
+  'P_IZIN_PELEDAK',
+  'P_SECURITY_CLEARANCE',
+  'P_PENGADAAN_KONTRAKTOR_SURVEI',
+  'P_PENGADAAN_BAHAN_PELEDAK',
+  'P_PENGADAAN_JASA_KENDALI_MUTU',
+  'P_MOBILISASI',
+  'P_ADVANCE_PARTY',
+  'P_BASIC_PARTY',
+  'P_REKLAMASI',
+  'P_KOMPENSASI_GANTI_RUGI',
+  'P_DEMOBILISASI'
 ]

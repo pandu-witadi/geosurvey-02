@@ -87,7 +87,7 @@ const login = async (req, res) => {
     })
     user.token = accessToken
     user = await user.save()
-    
+
     return res.status(201).json({
         isSuccess:  !!user,
         data: user
@@ -95,9 +95,97 @@ const login = async (req, res) => {
 
 }
 
+// --- read ---
+const readById = async ( req, res) => {
+    let { userId } = req.params
+    if (!userId)
+        return res.status(200).json({
+            isSuccess: false,
+            message: "userId not available"
+        })
 
+    try {
+        let obj = await User.findById(userId)
+
+        return res.status(200).json({
+            isSuccess: true,
+            data: obj
+        })
+
+    } catch (error) {
+        return res.status(200).json({
+            isSuccess: false,
+            message: error.message
+        })
+    }
+}
+
+// --- delete ---
+const deleteById = async ( req, res) => {
+    let { userId } = req.params
+    try {
+        let obj = await User.findById(userId)
+        if (obj) {
+            await obj.deleteOne()
+            return res.status(200).json({
+                isSuccess: true,
+                data: obj
+            })
+        } else {
+            return res.status(200).json({
+                isSuccess: false,
+                message: "error"
+            })
+        }
+
+
+    } catch (error) {
+        return res.status(200).json({
+            isSuccess: false,
+            message: error.message
+        })
+    }
+}
+
+
+// --- update ---
+const update = async ( req, res) => {
+    let { userId } = req.params
+    let update_info = req.body
+
+    if (update_info.password) {
+        update_info.password = await passwordHash(update_info.password)
+    }
+
+    try {
+        let filter =  { _id: userId }
+        let kegiatan = await User.findOneAndUpdate(filter,
+            { $set: update_info },
+            {
+                new: true,            // Return the updated document
+                runValidators: true,  // Run schema validations
+            }
+        )
+        // console.log(kegiatan)
+        user = await User.findById(userId)
+
+        return res.status(200).json({
+            isSuccess: true,
+            data: user
+        })
+
+    } catch (error) {
+        return res.status(200).json({
+            isSuccess: false,
+            message: error.message
+        })
+    }
+}
 // -----------------------------------------------------------------------------
 module.exports = {
     register,
-    login
+    login,
+    readById,
+    deleteById,
+    update
 }

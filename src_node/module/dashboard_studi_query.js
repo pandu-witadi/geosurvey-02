@@ -537,7 +537,8 @@ const create_dashboard =  (list_studi) => {
 const info_select = async (req, res) => {
     try {
         let { arr_TAHUN, arr_TIPE_STUDI, arr_HOLDING, arr_WK  } = req.body
-        let tmp = []
+
+        let tmp = [{ "active": true }]
 
         if (arr_TAHUN && arr_TAHUN.length > 0)
             tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })

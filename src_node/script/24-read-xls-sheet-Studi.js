@@ -69,6 +69,7 @@ function ExcelDateToJSDate(serial) {
 const create_project = (obj) => {
 
     let tmp = {
+        active: true,
         name: obj['NAMA_STUDI'] || "",
         info: {
             TAHUN: obj['TAHUN'] || 0,
@@ -98,8 +99,8 @@ const create_project = (obj) => {
             STATUS_USULAN_KEGIATAN: obj['STATUS_USULAN_KEGIATAN'] || "",
             JENIS_KOMITMEN: obj['JENIS_KOMITMEN'] || "",
 
-            RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) || null,
-            RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) || null,
+            RENCANA_WAKTU_MULAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_MULAI']) || new Date(),
+            RENCANA_WAKTU_SELESAI: ExcelDateToJSDate(obj['RENCANA_WAKTU_SELESAI']) || new Date(),
             RENCANA_ANGGARAN_AFE_INVESTASI:  obj['RENCANA_ANGGARAN_AFE_INVESTASI'] || 0,
             STATUS_WPNB: obj['STATUS_WPNB'] || "",
             KETERANGAN_RENCANA: obj['KETERANGAN_RENCANA'] || "",
@@ -112,8 +113,8 @@ const create_project = (obj) => {
 
             P_PROGRESS_PELAKSANAAN: obj['P_PROGRESS_PELAKSANAAN'] || 0,
             REALISASI_ANGGARAN_AFE_INVESTASI: obj['REALISASI_ANGGARAN_AFE_INVESTASI'] || 0,
-            REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || null,
-            REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) || null,
+            REALISASI_WAKTU_MULAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_MULAI']) || new Date(),
+            REALISASI_WAKTU_SELESAI: ExcelDateToJSDate(obj['REALISASI_WAKTU_SELESAI']) || new Date(),
             KETERANGAN_REALISASI: obj['KETERANGAN_REALISASI'] || "",
 
             VENDOR: obj['VENDOR'] || "",

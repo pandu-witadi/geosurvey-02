@@ -38,7 +38,9 @@ const find_by_select = async (req, res) => {
 
     let { arr_TAHUN, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
 
-    let tmp = []
+    // let tmp = []
+    let tmp = [{ "active": true }]
+
 
     if (arr_TAHUN && arr_TAHUN.length > 0)
         tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })
@@ -57,7 +59,7 @@ const find_by_select = async (req, res) => {
     if (tmp.length > 0)
         criteria = { $and: tmp }
 
-
+    console.log(tmp)
 
     try {
         const obj = await Kegiatan.find(criteria)

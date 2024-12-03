@@ -1,18 +1,30 @@
 //
 //
 const router = require('express').Router()
-const { authentication } = require('../util/is-auth')
+const { authentication, checkACLstr } = require('../util/is-auth')
 
 
 const { find_all } = require("../module/user_query")
-router.get('/q-find-all', authentication, find_all)
-
-const { find_all_brief } = require("../module/user_query")
-router.get('/q-find-all-brief', authentication, find_all_brief)
+router.get('/q-find-all', authentication, checkACLstr(["user", "admin"]), find_all)
 
 
-const { register, login } = require("../module/user_crud")
+// crud
+const { register } = require("../module/user_crud")
 router.post('/register', register)
+
+const { readById } = require("../module/user_crud")
+router.get('/:userId', authentication, checkACLstr(["user", "admin", "contractor"]), readById)
+
+const { update } = require("../module/user_crud")
+router.put('/:userId', authentication, checkACLstr(["admin"]), update)
+
+const { deleteById } = require("../module/user_crud")
+router.delete('/:userId', authentication, checkACLstr(["admin"]), deleteById)
+
+
+
+// login
+const { login } = require("../module/user_crud")
 router.post('/login', login)
 
 

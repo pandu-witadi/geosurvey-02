@@ -1,8 +1,6 @@
 //
 //
-const WKKegiatan = require('../model/WKKegiatan')
-const KKKSKegiatan = require('../model/KKKSKegiatan')
-const Kegiatan = require('../model/Kegiatan')
+const AFESurvei = require('../model/AFESurvei')
 
 
 const  create_summary_cards = (list_project_length, t_sc_stat) => {
@@ -201,9 +199,6 @@ const create_status_usulan_program_jenis_komitmen = (list) => {
     return obj
 }
 
-const trend_cummulative_rencanca_vs_realisasi_pekerjaan = (list) => {
-
-}
 
 const total_rencana_vs_realisasi_pekerjaan = (list) => {
     let obj = {
@@ -347,19 +342,7 @@ const calc_s_curve = (t_st_en, l_s_arr_q) => {
             budget_cost: 0,
             actual_cost: 0,
             budget_cost_acc: 0,
-            actual_cost_acc: 0,
-
-
-            plan_Seismic_2D: 0,
-            plan_Seismic_2D_acc: 0,
-            plan_Seismic_3D: 0,
-            plan_Seismic_3D_acc: 0,
-
-            actual_Seismic_2D: 0,
-            actual_Seismic_2D_acc: 0,
-            actual_Seismic_3D: 0,
-            actual_Seismic_3D_acc: 0,
-
+            actual_cost_acc: 0
         })
     }
 
@@ -371,24 +354,17 @@ const calc_s_curve = (t_st_en, l_s_arr_q) => {
             q_actual = l_s_arr_q[j].quarter_actual
             if (q_plan && q_plan.includes(q)) {
                 l_s_curve[i].cnt_plan += (1/q_plan.length)
-
-                l_s_curve[i].budget_cost     += (l_s_arr_q[j].budget_cost / q_plan.length)
-                l_s_curve[i].plan_Seismic_2D += (l_s_arr_q[j].plan_Seismic_2D / q_plan.length)
-                l_s_curve[i].plan_Seismic_3D += (l_s_arr_q[j].plan_Seismic_3D / q_plan.length)
-
+                l_s_curve[i].budget_cost += (l_s_arr_q[j].budget_cost/q_plan.length)
             }
             if (q_actual && q_actual.includes(q)) {
                 l_s_curve[i].cnt_actual += (1/q_actual.length)
-
-                l_s_curve[i].actual_cost       += (l_s_arr_q[j].actual_cost / q_actual.length)
-                l_s_curve[i].actual_Seismic_2D += (l_s_arr_q[j].actual_Seismic_2D / q_actual.length)
-                l_s_curve[i].actual_Seismic_3D += (l_s_arr_q[j].actual_Seismic_3D / q_actual.length)
+                l_s_curve[i].actual_cost += (l_s_arr_q[j].actual_cost/q_actual.length)
             }
         }
     }
 
     /// s-curve accumulative
-    let l_s_curve_cnt = [], l_s_curve_cost = [], l_s_curve_Seismic_2D = [], l_s_curve_Seismic_3D = []
+    let l_s_curve_cnt = [], l_s_curve_cost = []
     for (let i=0; i<l_s_curve.length; i++) {
         // console.log(l_s_curve[i])
         for (let j=0; j<=i; j++) {
@@ -397,14 +373,7 @@ const calc_s_curve = (t_st_en, l_s_arr_q) => {
 
             l_s_curve[i].budget_cost_acc += l_s_curve[j].budget_cost
             l_s_curve[i].actual_cost_acc += l_s_curve[j].actual_cost
-
-            l_s_curve[i].plan_Seismic_2D_acc   += l_s_curve[j].plan_Seismic_2D
-            l_s_curve[i].actual_Seismic_2D_acc += l_s_curve[j].actual_Seismic_2D
-
-            l_s_curve[i].plan_Seismic_3D_acc   += l_s_curve[j].plan_Seismic_3D
-            l_s_curve[i].actual_Seismic_3D_acc += l_s_curve[j].actual_Seismic_3D
         }
-
         l_s_curve_cnt.push({
             time_q: l_s_curve[i].time_q,
             cnt_plan_acc: l_s_curve[i].cnt_plan_acc,
@@ -415,28 +384,14 @@ const calc_s_curve = (t_st_en, l_s_arr_q) => {
             budget: l_s_curve[i].budget_cost_acc,
             actual: l_s_curve[i].actual_cost_acc,
         })
-        l_s_curve_Seismic_2D.push({
-            str_q: l_s_curve[i].time_q,
-            plan: l_s_curve[i].plan_Seismic_2D_acc,
-            actual: l_s_curve[i].actual_Seismic_2D_acc,
-        })
-        l_s_curve_Seismic_3D.push({
-            str_q: l_s_curve[i].time_q,
-            plan: l_s_curve[i].plan_Seismic_3D_acc,
-            actual: l_s_curve[i].actual_Seismic_3D_acc,
-        })
     }
 
     return {
         l_s_curve_cnt,
-        l_s_curve_cost,
-        l_s_curve_Seismic_2D,
-        l_s_curve_Seismic_3D
+        l_s_curve_cost
     }
 }
 
-
-// masin dashboard
 const create_dashboard = (list_obj) => {
     num_top_watch = 5
     let l_s_arr_q = []
@@ -445,7 +400,6 @@ const create_dashboard = (list_obj) => {
         en_d: null
     }
     let budget = 0, actual = 0
-    let plan_Seismic_2D = 0, plan_Seismic_3D = 0, actual_Seismic_2D = 0, actual_Seismic_3D = 0
 
     let t_sc_stat = {
         total_resource: 0,
@@ -467,7 +421,6 @@ const create_dashboard = (list_obj) => {
     let list_project_summary = []
     let obj = null
     let t_tot_invest = 0
-    let c = null
     for (let i=0; i<list_obj.length; i++) {
 
         obj = list_obj[i]
@@ -516,51 +469,18 @@ const create_dashboard = (list_obj) => {
             budget = obj.info.NILAI_AFE_INVESTASI || 0
             actual = obj.info.REALISASI_AFE_INVESTASI || 0
 
-            if (obj.info.JENIS_KEGIATAN == "Seismik 2D") {
-                plan_Seismic_2D =  obj.info.RENCANA_KUANTITAS_PEKERJAAN || 0
-                actual_Seismic_2D =  obj.info.REALISASI_KUANTITAS_PEKERJAAN || 0
-            } else if (obj.info.JENIS_KEGIATAN == "Seismik 3D") {
-                plan_Seismic_3D =  obj.info.RENCANA_KUANTITAS_PEKERJAAN || 0
-                actual_Seismic_3D =  obj.info.REALISASI_KUANTITAS_PEKERJAAN || 0
-            }
-
             l_s_arr_q.push({
                 "_id": obj._id.toString(),
                 name: obj.name,
                 quarter_plan: quarter_plan,
                 quarter_actual: quarter_actual,
                 budget_cost: budget,
-                actual_cost: actual,
-
-                plan_Seismic_2D: plan_Seismic_2D,
-                actual_Seismic_2D: actual_Seismic_2D,
-                plan_Seismic_3D: plan_Seismic_3D,
-                actual_Seismic_3D: actual_Seismic_3D
+                actual_cost: actual
             })
-            console.log({
-                "_id": obj._id.toString(),
-                name: obj.name,
-                quarter_plan: quarter_plan,
-                quarter_actual: quarter_actual,
-                budget_cost: budget,
-                actual_cost: actual,
-
-                plan_Seismic_2D: plan_Seismic_2D,
-                actual_Seismic_2D: actual_Seismic_2D,
-                plan_Seismic_3D: plan_Seismic_3D,
-                actual_Seismic_3D: actual_Seismic_3D
-            }
-
-            )
         }
     }
 
-    let {
-        l_s_curve_cnt,
-        l_s_curve_cost,
-        l_s_curve_Seismic_2D,
-        l_s_curve_Seismic_3D
-    } = calc_s_curve(t_st_en, l_s_arr_q)
+    let { l_s_curve_cnt, l_s_curve_cost } = calc_s_curve(t_st_en, l_s_arr_q)
 
     // show 6 top_watch
     let top_watch = list_project_summary.sort((a, b) => parseFloat(b['NILAI_INVESTASI']) - parseFloat(a['NILAI_INVESTASI'])).slice(0, num_top_watch)
@@ -575,10 +495,6 @@ const create_dashboard = (list_obj) => {
         "status_kegiatan": create_status_kegiatan(list_obj),
         "status_usulan_program": create_status_usulan_program(list_obj),
         "status_usulan_program_jenis_komitmen": create_status_usulan_program_jenis_komitmen(list_obj),
-        "trend_cummulative_rencanca_vs_realisasi_pekerjaan": {
-            "Seismic_2D": l_s_curve_Seismic_2D,
-            "Seismic_3D": l_s_curve_Seismic_3D,
-        },
         "total_rencana_vs_realisasi_pekerjaan": res_total_rencana_vs_realisasi_pekerjaan,
         "persentase_rencana_vs_realisasi_pekerjaan": persentase_rencana_vs_realisasi_pekerjaan(res_total_rencana_vs_realisasi_pekerjaan),
         "trend_budget_cost_vs_actual_cost": l_s_curve_cost, //trend_budget_cost_vs_actual_cost(list_obj),
@@ -593,8 +509,6 @@ const info_select = async (req, res) => {
     try {
         let { arr_TAHUN, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
         let tmp = []
-        // let tmp = [{ "active": true }]
-
 
         if (arr_TAHUN && arr_TAHUN.length > 0)
             tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })
@@ -612,8 +526,7 @@ const info_select = async (req, res) => {
         if (tmp.length > 0)
             criteria = { $and: tmp }
 
-        let list_obj  = await Kegiatan.find(criteria)
-        console.log(list_obj.length)
+        let list_obj  = await AFESurvei.find(criteria)
 
         let obj = create_dashboard(list_obj)
         return res.status(200).json({

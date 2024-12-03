@@ -16,7 +16,9 @@ let CF = {
     path: {
         file: '/upload/file',
         image: '/upload/image',
-        video: '/upload/video'
+        video: '/upload/video',
+        kegiatan: '/upload/kegiatan',
+        studi: '/upload/studi'
     },
     // mongodb setting
     mongoose: {
@@ -63,6 +65,8 @@ CF.server.path_file = CF.server.host + ':' + CF.server.PORT.toString() + CF.path
 CF.server.path_image = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.image
 CF.server.path_video = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.video
 
+CF.server.path_kegiatan = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.kegiatan
+CF.server.path_studi = CF.server.host + ':' + CF.server.PORT.toString() + CF.path.studi
 
 CF.mongoose.url  = CF.mongoose.uri + '/' + CF.mongoose.database
 
