@@ -30,7 +30,7 @@ let CF = {
         database : 'MERN-geosurvey-01',
     },
     jwt: {
-        isAuth: false,
+        isAuth: true,
         authentication_token_name: 'accessToken',
         saltLength: 10,
         accessToken: "edflvwgv684r04jmyg3s",

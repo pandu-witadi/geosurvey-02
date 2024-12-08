@@ -1,7 +1,10 @@
 //
 //
+const path = require('path')
 const CF = require('../conf/conf_app')
 const { appCurrentDateTime } = require('../util/time_format')
+const { createRandomId } = require('../util/random')
+const { checkDirectoryExists, createDirectory } = require('../util/file')
 
 
 let api = {
@@ -412,7 +415,47 @@ const test_get = async (req, res) => {
     }
 }
 
+
+const create_randomId = async (req, res) => {
+
+    let isDirectoryExists = true
+    let courseId = ""
+    let directoryPath = ""
+
+    while (isDirectoryExists) {
+        courseId = createRandomId({totalChar: 2, totalDigit: 5})
+        console.log(courseId)
+
+        // check of course id is unique or not
+        try {
+            directoryPath = path.join(__dirname, "..", CF.path.kegiatan, courseId)
+            isDirectoryExists = await checkDirectoryExists(directoryPath)
+            if ( !isDirectoryExists ) {
+                console.log(directoryPath)
+                createDirectory(directoryPath)
+            }
+        } catch (error) {
+            return res.status(500).json({
+                isSuccess: false,
+                error: error.message,
+                message: 'Error while creating random ID'
+            })
+        }
+    }
+
+
+    return res.status(200).json({
+        isSuccess: true,
+        path: directoryPath,
+        data: courseId
+    })
+}
+
+
+
+
 // -----------------------------------------------------------------------------
 module.exports = {
-    test_get
+    test_get,
+    create_randomId
 }

@@ -1,7 +1,12 @@
 //
 //
+const path = require('path')
+
+const CF = require('../conf/conf_app')
 const Kegiatan = require('../model/Kegiatan')
 const { ExcelDateToJSDate } = require("../util/time_format")
+const { createRandomId } = require('../util/random')
+const { checkDirectoryExists, createDirectory } = require('../util/file')
 
 
 const create_info = (obj) => {
@@ -113,8 +118,6 @@ const create_info = (obj) => {
 
     }
 
-
-
     return info
 }
 
@@ -138,12 +141,36 @@ const create = async (req, res) => {
     }
 
     try {
+        // create directory
+        let isDirectoryExists = true
+        let randomId = ""
+        let directoryPath = ""
+
+        while (isDirectoryExists) {
+            randomId = createRandomId({totalChar: 2, totalDigit: 5})
+            // console.log(randomId)
+
+            // check of course id is unique or not
+            try {
+                directoryPath = path.join(__dirname, "..", CF.path.kegiatan, randomId)
+                isDirectoryExists = await checkDirectoryExists(directoryPath)
+                if ( !isDirectoryExists ) {
+                    createDirectory(directoryPath)
+                    console.log('... create directory: ' + directoryPath)
+                }
+            } catch (error) {}
+        }
+
         let info = create_info(req.body)
+
         const obj = new Kegiatan({
             name: NAMA_KEGIATAN,
+            active: true,
+            randomId: randomId,
             info: info
         })
         let kegiatan = await obj.save()
+
         return res.status(201).json({
             isSuccess:  !!kegiatan,
             data: kegiatan
@@ -199,8 +226,12 @@ const update = async ( req, res) => {
                     update_info[`${key}.${nestKey}`] =  req.body[key][nestKey]
                 }
 
-            } else
+            } else {
                 update_info['info.' + key] = req.body[key]
+                if (key === "NAMA_KEGIATAN") {
+                    update_info[key] = req.body[key]
+                }
+            }
         }
     }
     // console.log(update_info)

@@ -5,6 +5,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
+
 
 const connectMongoDB = require('./db/mongodb-conn')
 const { notFound, errorHandler } = require('./middleware/error')
@@ -23,6 +25,11 @@ app.use( cors() )
 app.use( express.json() )
 app.use( express.urlencoded({ extended: true, limit: "50mb" }))
 
+app.use( fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp'
+}))
+
 // Database Connection
 mongoose.Promise = global.Promise
 Promise.resolve(app)
@@ -38,7 +45,7 @@ console.log( '__dirname   :  ' + __dirname)
 // console.log( '[map file]  :  ' + CF.server.path_file + '  ->  ' + path.join(__dirname, CF.path.file) )
 // app.use( '/upload/file', express.static( path.join(__dirname, CF.path.file) ) )
 // console.log( '[map image] :  ' + CF.server.path_image + '  ->  ' + path.join(__dirname, CF.path.image) )
-// app.use( '/upload/image', express.static( path.join(__dirname, CF.path.image) ) )
+app.use( '/upload/kegiatan', express.static( path.join(__dirname, CF.path.kegiatan) ) )
 // console.log( '[map video] :  ' + CF.server.path_video + '  ->  ' + path.join(__dirname, CF.path.video) )
 // app.use( '/upload/video', express.static( path.join(__dirname, CF.path.video) ) )
 
@@ -62,6 +69,8 @@ app.use('/api/dashboard',                   require('./api/dashboard'))
 
 app.use('/api/kegiatan',                    require('./api/kegiatan'))
 app.use('/api/studi',                       require('./api/studi'))
+
+app.use('/api/file',                        require('./api/file'))
 
 // serve client
 //these 3 lines make sure that Angular/VUe/React and express app are coming from the same server

@@ -9,6 +9,11 @@ const info_select_project = async (req, res) => {
     let { arr_YEAR, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
 
     let tmp = []
+    // let tmp = [{ "active": true }]
+
+    if (req.user && req.user.role == "contractor") {
+        tmp.push({ "info.WK" : req.user.WK })
+    }
 
     if (arr_JENIS_KEGIATAN && arr_JENIS_KEGIATAN.length > 0)
         tmp.push({ "info.JENIS_KEGIATAN" : { $in: arr_JENIS_KEGIATAN } })

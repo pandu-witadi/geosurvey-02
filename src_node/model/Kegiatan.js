@@ -105,6 +105,8 @@ const info = {
     P_REKLAMASI: Number,
     P_KOMPENSASI_GANTI_RUGI: Number,
     P_BASIC_PARTY: Number,
+
+    RECEIVER_LINE_INTERVAL_M: Number
 }
 
 
@@ -122,10 +124,16 @@ const objSchema = new mongoose.Schema(
         },
         info: info,
         tmp: info,
+        randomId: String,
         pupos: {
             type: Object,
             default: undefined
-        }
+        },
+        fileUpload: {
+           thumbnail: [],
+           shp: [],
+           excel: []
+        },
     },
     {
         timestamps: true,

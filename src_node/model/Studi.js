@@ -72,6 +72,8 @@ const objSchema = new mongoose.Schema(
             default: true
         },
         info: info,
+        tmp: info,
+        randomId: String,
     },
     {
         timestamps: true,

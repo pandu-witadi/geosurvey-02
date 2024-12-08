@@ -538,7 +538,12 @@ const info_select = async (req, res) => {
     try {
         let { arr_TAHUN, arr_TIPE_STUDI, arr_HOLDING, arr_WK  } = req.body
 
-        let tmp = [{ "active": true }]
+        let tmp = []
+        // let tmp = [{ "active": true }]
+
+        if (req.user && req.user.role == "contractor") {
+            tmp.push({ "info.WK" : req.user.WK })
+        }
 
         if (arr_TAHUN && arr_TAHUN.length > 0)
             tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })

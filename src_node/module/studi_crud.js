@@ -1,7 +1,11 @@
 //
 //
-const Studi = require('../model/Studi')
+const path = require('path')
 
+const CF = require('../conf/conf_app')
+const Studi = require('../model/Studi')
+const { createRandomId } = require('../util/random')
+const { checkDirectoryExists, createDirectory } = require('../util/file')
 
 
 // --- create ---
@@ -24,14 +28,36 @@ const create = async (req, res) => {
     }
 
     try {
+        // create directory
+        let isDirectoryExists = true
+        let randomId = ""
+        let directoryPath = ""
+
+        while (isDirectoryExists) {
+            randomId = createRandomId({totalChar: 2, totalDigit: 5})
+            // console.log(randomId)
+
+            // check of course id is unique or not
+            try {
+                directoryPath = path.join(__dirname, "..", CF.path.studi, randomId)
+                isDirectoryExists = await checkDirectoryExists(directoryPath)
+                if ( !isDirectoryExists ) {
+                    createDirectory(directoryPath)
+                    console.log('... create directory: ' + directoryPath)
+                }
+            } catch (error) {}
+        }
+
         const obj = new Studi({
             name: NAMA_STUDI,
+            active: true,
+            randomId: randomId,
             info: req.body
         })
-        let kegiatan = await obj.save()
+        let studi = await obj.save()
         return res.status(201).json({
-            isSuccess:  !!kegiatan,
-            data: kegiatan
+            isSuccess:  !!studi,
+            data: studi
         })
     } catch (error) {
         return res.status(400).json({
@@ -78,8 +104,12 @@ const update = async ( req, res) => {
     for (const key of Object.keys(req.body)) {
         if (req.body[key] !== '') {
             update_info['info.' + key] = req.body[key]
+            if (key === "NAMA_STUDI") {
+                update_info[key] = req.body[key]
+            }
         }
     }
+
     console.log(update_info)
     try {
         let filter =  { _id: studiId }

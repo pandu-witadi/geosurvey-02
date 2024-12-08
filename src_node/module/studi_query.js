@@ -20,7 +20,7 @@ const find_all = async (req, res) => {
 
 const find_all_summary = async (req, res) => {
     try {
-        const obj = await Studi.find().sort({ createdAt: 1 }).select('_id name')
+        const obj = await Studi.find().sort({ createdAt: 1 }).select('_id name randomId')
         return res.status(200).json({
             isSuccess: true,
             data: obj
@@ -39,6 +39,11 @@ const find_by_select = async (req, res) => {
     let { arr_TAHUN, arr_TIPE_STUDI, arr_HOLDING, arr_WK  } = req.body
 
     let tmp = []
+    // let tmp = [{ "active": true }]
+
+    if (req.user && req.user.role == "contractor") {
+        tmp.push({ "info.WK" : req.user.WK })
+    }
 
     if (arr_TAHUN && arr_TAHUN.length > 0)
         tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })

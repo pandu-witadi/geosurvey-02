@@ -590,11 +590,17 @@ const create_dashboard = (list_obj) => {
 
 
 const info_select = async (req, res) => {
+    // console.log(req.user)
+
     try {
         let { arr_TAHUN, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
+
         let tmp = []
         // let tmp = [{ "active": true }]
 
+        if (req.user && req.user.role == "contractor") {
+            tmp.push({ "info.WK" : req.user.WK })
+        }
 
         if (arr_TAHUN && arr_TAHUN.length > 0)
             tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })
@@ -611,6 +617,9 @@ const info_select = async (req, res) => {
         let criteria = {}
         if (tmp.length > 0)
             criteria = { $and: tmp }
+
+        console.log(tmp)    
+
 
         let list_obj  = await Kegiatan.find(criteria)
         console.log(list_obj.length)

@@ -12,7 +12,7 @@ const authentication = async (req, res, next) => {
         next()
     } else {
         let access_token = req.headers['authorization']
-        console.log(access_token)
+        // console.log(access_token)
 
         if (!access_token) {
             return res.status(401).json({ message: "headers[AUthorization] not exist"})

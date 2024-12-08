@@ -8,6 +8,11 @@ const info_select_project = async (req, res) => {
     let { arr_YEAR, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
 
     let tmp = []
+    // let tmp = [{ "active": true }]
+
+    if (req.user && req.user.role == "contractor") {
+        tmp.push({ "properties.WK" : req.user.WK })
+    }
 
     // if (arr_YEAR && arr_YEAR.length > 0)
     //     tmp.push({ "info.YEAR" : { $in: arr_YEAR } })
@@ -26,11 +31,14 @@ const info_select_project = async (req, res) => {
     if (tmp.length > 0)
         criteria = { $and: tmp }
 
+    // console.log(tmp)
+
     let arr  = await GeoSpatialWK.find(criteria).lean()
+    // console.log(arr)
 
     let tepl = null
     let features = []
-    if (arr && arr.length >= 0) {
+    if (arr && arr.length > 0) {
         let { parent, ...otherKeys } = arr[0]
         tepl = { ...parent }
         // console.log(tepl)
@@ -39,11 +47,16 @@ const info_select_project = async (req, res) => {
             features.push({...otherKeys})
         }
         tepl['features'] = features
+        return res.status(200).json(tepl)
+    } else {
+        return res.status(200).json({
+            features: []
+        })
     }
 
 
 
-    return res.status(200).json(tepl)
+
 }
 
 

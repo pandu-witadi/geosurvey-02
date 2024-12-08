@@ -32,6 +32,7 @@
 # node src_node/script/02-scan-xls-sheet.js "../data" "2024-11-14_KSSG_2024_SKK_db_v5.xlsx" "summary_kegiatan_survey"
 # node src_node/script/02-scan-xls-sheet.js "../data" "2024-11-15_LSKNK_2024_v8.xlsx" "Sheet1"
 # node src_node/script/02-scan-xls-sheet.js "../data"  "2024-11-08_Database AFE_Survei_v1.xlsx" "Sheet1"
+
 # node src_node/script/02-scan-xls-sheet.js "../data"  "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "Sheet1"
 # node src_node/script/02-scan-xls-sheet.js "../data"  "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "studi"
 
@@ -46,12 +47,12 @@
 # arg 4 : target sheet name
 # arg 5 : target column name
 # 13-read-xls-sheet-WK.js
-# node src_node/script/11-read-xls-sheet-WK-Kegiatan.js "../data" "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "Sheet1" "WK"
+# node src_node/script/11-read-xls-sheet-WK-Kegiatan.js "../data" "2024-11-14_KSSG_2024_SKK_db_v5" "summary_kegiatan_survey" "WK"
 
 
 
 # 23-read-xls-sheet-WK.js
-node src_node/script/21-read-xls-sheet-WK-Studi.js    "../data" "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "studi" "WK"
+# node src_node/script/21-read-xls-sheet-WK-Studi.js    "../data" "2024-11-15_LSKNK_2024_v8" "Sheet1" "WK"
 
 # arg 0 : node
 # arg 1 : script read js
@@ -60,10 +61,10 @@ node src_node/script/21-read-xls-sheet-WK-Studi.js    "../data" "2024-10-10_ACUA
 # arg 4 : target sheet name
 # arg 5 : target column name
 # 14-read-xls-sheet-Holding-Kegiatan.js
-# node src_node/script/12-read-xls-sheet-Holding-Kegiatan.js "../data"  "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "Sheet1" "HOLDING"
+# node src_node/script/12-read-xls-sheet-Holding-Kegiatan.js "../data"  "2024-11-14_KSSG_2024_SKK_db_v5" "summary_kegiatan_survey" "HOLDING"
 
 # 24-read-xls-sheet-Holding-Studi.js
-node src_node/script/22-read-xls-sheet-Holding-Studi.js    "../data"  "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "studi" "HOLDING"
+# node src_node/script/22-read-xls-sheet-Holding-Studi.js    "../data"  "2024-11-15_LSKNK_2024_v8" "Sheet1" "HOLDING"
 
 
 # arg 0 : node
@@ -73,10 +74,10 @@ node src_node/script/22-read-xls-sheet-Holding-Studi.js    "../data"  "2024-10-1
 # arg 4 : target sheet name
 # arg 5 : target column name
 # 15-read-xls-sheet-KKKS-Kegiatan.js
-# node src_node/script/13-read-xls-sheet-KKKS-Kegiatan.js "../data"  "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "Sheet1" "KKKS"
+# node src_node/script/13-read-xls-sheet-KKKS-Kegiatan.js "../data" "2024-11-14_KSSG_2024_SKK_db_v5" "summary_kegiatan_survey" "KKKS"
 
 # 25-read-xls-sheet-KKKS-Kegiatan.js
-node src_node/script/23-read-xls-sheet-KKKS-Studi.js    "../data" "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "studi" "KKKS"
+# node src_node/script/23-read-xls-sheet-KKKS-Studi.js    "../data" "2024-11-15_LSKNK_2024_v8" "Sheet1" "KKKS"
 
 
 # arg 0 : node
@@ -118,3 +119,7 @@ node src_node/script/23-read-xls-sheet-KKKS-Studi.js    "../data" "2024-10-10_AC
 # 15-read-geojson-titik-Kegiatan.js
 # node src_node/script/25-read-geojson-titik-Studi.js "../data" "Geospatial_Titik_Survei_SKK_Migas_2024_Studi.geojson" "NAMA_STUDI"
 #
+
+
+
+node src_node/script/16-read-xls-sheet-KKKS-WK-HOLDING-Kegiatan.js "../data" "2024-10-10_ACUAN_NAMA_KKKS_WK__IDX_2024.xlsx" "Sheet1" "WK"

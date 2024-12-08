@@ -4,6 +4,7 @@ const Kegiatan = require('../model/Kegiatan')
 
 
 const find_all = async (req, res) => {
+
     try {
         const obj = await Kegiatan.find().sort({ createdAt: 1 })
         return res.status(200).json({
@@ -20,7 +21,7 @@ const find_all = async (req, res) => {
 
 const find_all_summary = async (req, res) => {
     try {
-        const obj = await Kegiatan.find().sort({ createdAt: 1 }).select('_id name')
+        const obj = await Kegiatan.find().sort({ createdAt: 1 }).select('_id name randomId active')
         return res.status(200).json({
             isSuccess: true,
             data: obj
@@ -38,9 +39,12 @@ const find_by_select = async (req, res) => {
 
     let { arr_TAHUN, arr_JENIS_KEGIATAN, arr_HOLDING, arr_WK  } = req.body
 
-    // let tmp = []
-    let tmp = [{ "active": true }]
+    let tmp = []
+    // let tmp = [{ "active": true }]
 
+    if (req.user && req.user.role == "contractor") {
+        tmp.push({ "info.WK" : req.user.WK })
+    }
 
     if (arr_TAHUN && arr_TAHUN.length > 0)
         tmp.push({ "info.TAHUN" : { $in: arr_TAHUN } })

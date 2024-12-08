@@ -4,8 +4,19 @@ const WKStudi = require('../model/WKStudi')
 
 
 const find_all = async (req, res) => {
+    let tmp = []
+    // let tmp = [{ "active": true }]
+
+    if (req.user && req.user.role == "contractor") {
+        tmp.push({ "name" : req.user.WK })
+    }
+
+    let criteria = {}
+    if (tmp.length > 0)
+        criteria = { $and: tmp }
+
     try {
-        const obj = await WKStudi.find().sort({ createdAt: 1 })
+        const obj = await WKStudi.find(criteria).sort({ createdAt: 1 })
         return res.status(200).json({
             isSuccess: true,
             data: obj
